@@ -10,7 +10,7 @@ Search Console Archive store your Google Search Console (Webmaster Tools) Data t
 - Period comparison
 - Multiples websites
 
-![Screenshot](http://blog.elijaa.org/wp-content/uploads/2016/09/demo.jpg)![Screenshot](http://blog.elijaa.org/wp-content/uploads/2016/09/demo2.jpg)
+![Screenshot](http://blog.elijaa.org/wp-content/uploads/2016/09/demo.jpg)  ![Screenshot](http://blog.elijaa.org/wp-content/uploads/2016/09/demo2.jpg)
 
 ### Beta ###
 
