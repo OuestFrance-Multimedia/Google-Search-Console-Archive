@@ -43,21 +43,28 @@ Follow the instructions to Create a Service Account
 Rename configuration/base.php.sample to configuration/base.php
 
 Edit base.php and fill/replace the following :
-- Timezone & locale
+- [Timezone](http://php.net/manual/en/timezones.php) & locale
 - Api Login
 - Websites to check (Add http:// or https:// before your website DNS)
+    
+    # Website to check, edit this, keep array key and table value the same
+    'websites' => array(
+        'blog.elijaa.org' => array(
+            'url' => 'http://blog.elijaa.org',
+            'table' => 'blog.elijaa.org')),
+    
 - Database configuration (Hostname, password, port, database name)
 
 
 ### Database configuration ###
 
-You will need a MySQL database for Search Console Archive
+You will need a MySQL database for Search Console Archive AND a user granted for CREATE, SELECT, INSERT, UPDATE, DELETE
 
 - Open docs/sql/website.sql, replace the {%website%} token with your website name 
 (The ['table'] key used in the website array in the configuration file)
 - Run the SQL code to in your MySQL Database to create base tables for every website you want to add
-- Run filters.sql too
-
+- Open docs/sql/filters.sql, replace the {%website%} token with your website name 
+- Run the SQL code to in your MySQL Database to create base filters
 
 ### Data Import configuration ###
 
@@ -75,6 +82,29 @@ You need to do the same (Adjust the time) everytime Google Search Console Data i
 
 In a normal use, use the default parameter
 
+## Filters ##
+
+Filters are shortcut to saved search/filters, the docs/sql/filters.sql file contain two sample
+
+Actually there is no way to add/modify them in the tool, only in the database.
+
+    INSERT INTO `filters`
+    (`name`,
+    `query`,
+    `value`,
+    `website`)
+    VALUES
+    (<{name: }>,
+    <{query: }>,
+    <{value: }>,
+    <{website: }>);
+
+- name : name of the filter
+- query : page/query
+- value : the filter value, like *^/$* for your homepage or *memcache -php* for the *memcache* keyword but not associated with the *php* keyword
+- website : the website shortcut name
+
+Future version will add a nice filter handling
 
 ## Google API PHP Client ##
 Search Console Archive use [Google APIs Client Library for PHP](https://github.com/google/google-api-php-client) to query Google API
