@@ -27,7 +27,7 @@ ob_start();
 require 'bootstrap.php';
 
 # Parameters
-$website = ((isset($_REQUEST['website'])) && (empty($_REQUEST['website']) === false)) ? $_REQUEST['website'] : key(current($configuration['website']));
+$website = ((isset($_REQUEST['website'])) && (empty($_REQUEST['website']) === false)) ? $_REQUEST['website'] : key($configuration['websites']);
 $device = ((isset($_REQUEST['device'])) && (empty($_REQUEST['device']) === false)) ? $_REQUEST['device'] : 'desktop';
 $query = ((isset($_REQUEST['query'])) && (empty($_REQUEST['query']) === false)) ? $_REQUEST['query'] : 'page';
 $search = ((isset($_REQUEST['search'])) && (empty($_REQUEST['search']) === false)) ? urldecode($_REQUEST['search']) : null;
