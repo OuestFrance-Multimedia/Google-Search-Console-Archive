@@ -46,12 +46,12 @@ Edit base.php and fill/replace the following :
 - [Timezone](http://php.net/manual/en/timezones.php) & locale
 - Api Login
 - Websites to check (Add http:// or https:// before your website DNS)
-    
+    '''php
     'websites' => array(
         'blog.elijaa.org' => array(
             'url' => 'http://blog.elijaa.org',
             'table' => 'blog.elijaa.org')),
-    
+    '''
 - Database configuration (Hostname, password, port, database name)
 
 
