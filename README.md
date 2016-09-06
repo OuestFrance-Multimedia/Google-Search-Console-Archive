@@ -47,7 +47,6 @@ Edit base.php and fill/replace the following :
 - Api Login
 - Websites to check (Add http:// or https:// before your website DNS)
     
-    # Website to check, edit this, keep array key and table value the same
     'websites' => array(
         'blog.elijaa.org' => array(
             'url' => 'http://blog.elijaa.org',
