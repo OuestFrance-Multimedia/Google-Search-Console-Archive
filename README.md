@@ -10,6 +10,8 @@ Search Console Archive store your Google Search Console (Webmaster Tools) Data t
 - Period comparison
 - Multiples websites
 
+![Screenshot](http://blog.elijaa.org/wp-content/uploads/2016/09/demo.jpg)
+
 ### Beta ###
 
 This tool is in Beta, but we use it a lot in a daily basis and are comfortable enough with the stability and features to release it.
