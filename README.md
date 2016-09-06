@@ -53,17 +53,20 @@ You will need a MySQL database for Search Console Archive
 
 ### Data Import configuration ###
 
-You need to run cron.php everyday once, it will take the last 7 days of data available.
+You need to run cron.php everyday once, it will take by default the last 7 days of data available.
+
+You can pass a integer parameter to specify the number of day from now() to retreive
 
 Don't forget that Search Console data is not up to date, you have a 3-5 day delay, more some times, check this page for explanation/missing data : https://support.google.com/webmasters/answer/6211453#search_analytics
 
-!! **For the first run, edit line 38 of cron.php and put 90 days to import all available history**
+!! **For the first run, put 90 days in the first run to import all available history**
 
-    # Parameters
-    $date['from'] = (isset($_GET['start'])) ? $_GET['start'] : date('Y-m-d', strtotime('-90 days'));
-    $date['to'] = (isset($_GET['end'])) ? $_GET['end'] : date('Y-m-d', strtotime('-1 days'));
+    php cron.php 90
 
 You need to do the same (Adjust the time) everytime Google Search Console Data is missing
+
+In a normal use, use the default parameter
+
 
 ## Google API PHP Client ##
 Search Console Archive use [Google APIs Client Library for PHP](https://github.com/google/google-api-php-client) to query Google API
