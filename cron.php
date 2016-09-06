@@ -50,7 +50,7 @@ require 'bootstrap.php';
 Configuration :
   Database : <?php echo $configuration['database']['username'] . '@' . $configuration['database']['host'] . ':' . $configuration['database']['port'] . '/' . $configuration['database']['database'] . PHP_EOL?>
 Usage : php cron.php $from
-        from : days of data history to check from now
+        $from : days of data history to check from now
 Docs : https://developers.google.com/webmaster-tools/v3/searchanalytics/query
 
 <?php

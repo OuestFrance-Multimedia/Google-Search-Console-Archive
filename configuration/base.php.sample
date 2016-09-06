@@ -45,9 +45,9 @@ $configuration = array(
     'websites' => array(
         'id' => array(
             'url' => 'site_url',
-            'table' => 'id'),
-        'id2' => array(
-            'url' => 'site_url',
+            'table' => 'id'), # No dot or special chars
+        'id2' => array( # Remove this array if not needed
+            'url' => 'site_url', 
             'table' => 'id2')),
 
     # Device to check
