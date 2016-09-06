@@ -55,7 +55,7 @@ Docs : https://developers.google.com/webmaster-tools/v3/searchanalytics/query
 
 <?php
 # Parameters
-$date['from'] = (isset($_GET['start'])) ? $_GET['start'] : date('Y-m-d', (isset($argv[1]) ? strtotime('-' . int($argv[1]) . ' days') : strtotime('-7 days')));
+$date['from'] = (isset($_GET['start'])) ? $_GET['start'] : date('Y-m-d', (isset($argv[1]) ? strtotime('-' . (int)$argv[1] . ' days') : strtotime('-7 days')));
 $date['to'] = (isset($_GET['end'])) ? $_GET['end'] : date('Y-m-d', strtotime('-1 days'));
 
 # Making Credential for API

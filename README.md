@@ -29,6 +29,14 @@ Follow the instructions to Create a Service Account
 - Generate & download a p12 Key for your account
 - Put the P12 key in the configuration folder
 
+### Adding Service Account to Google Search Console ###
+
+- Open [Google Search Console](https://www.google.com/webmasters)
+- Select your website
+- Click on the top right menu and select **Users & Property Owner**
+- Select **Add a new user**
+- Add the Service Account email and keep the Restricted permission
+- Click on Add
 
 ### Script configuration ###
 
