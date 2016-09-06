@@ -1,0 +1,70 @@
+<?php
+/**
+ * Google Search Console Archive
+ * 
+ * Copyright (C) 2016 : Cyrille Mahieux (c.mahieux@of2m.fr) & Vincent Robert (v.robert@of2m.fr) @ Ouest France Multimedia
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+ 
+# Maximum Execution Time & Memory
+set_time_limit(1880);
+ini_set('memory_limit', '4G');
+
+# Error Handling
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+# Finding p12 Key in /configuration directory
+$key = current(glob(dirname(__FILE__) . '/*.p12'));
+
+# Basic Configuration
+$configuration = array(
+    # Timezone & Locale
+    'timezone' => 'Europe/Paris', # Edit for your timezone
+    'locale' => 'en_US',
+
+    # API Login, Update with your Google Service Account
+    'api' => array(
+        'login' => 'your_service_account@developer.gserviceaccount.com', # Edit with your google service account
+        'key' => file_get_contents($key),
+        'scope' => 'https://www.googleapis.com/auth/webmasters.readonly'),
+
+    # Website to check, edit this, keep array key and table value the same
+    'websites' => array(
+        'id' => array(
+            'url' => 'site_url',
+            'table' => 'id'),
+        'id2' => array(
+            'url' => 'site_url',
+            'table' => 'id2')),
+
+    # Device to check
+    'device' => array(
+        'desktop',
+        'tablet',
+        'mobile'),
+
+    # Database Configuration, edit everything but 'table' array
+    'database' => array(
+        'host' => 'mysql_host',
+        'database' => 'mysql_database',
+        'username' => 'mysql_username',
+        'password' => 'mysql_password',
+        'port' => 3306,
+        'table' => array(
+            'pages' => 'pages_{%device%}_{%website%}',
+            'queries' => 'queries_{%device%}_{%website%}')));
+
+return $configuration;

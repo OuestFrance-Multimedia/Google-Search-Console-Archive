@@ -1,0 +1,236 @@
+<script type="text/javascript" src="resources/scripts/specific/liste.js"></script>
+
+<form method="get" action="index.php" class="form">
+    <input type="hidden" name="website" value="<?php echo $website ?>" />
+    <input type="hidden" name="device" value="<?php echo $device ?>" />
+    <input type="hidden" name="query" value="<?php echo $query ?>" /> <input
+        type="hidden" name="date[from]"
+        value="<?php echo $interval['base']['from'] ?>" /> <input
+        type="hidden" name="date[to]"
+        value="<?php echo $interval['base']['to'] ?>" /><input
+        type="text" id="search" name="search"
+        value="<?php echo $search ?>" list="filters"></input>
+    <button type="submit" class="google">Filter</button>
+    <div class="help-tip">
+        <p>
+            <strong>Search Filter</strong><br /> <br />
+            Pour
+            exclure les résultats de recherche incluant un mot ou une
+            page précise, précédez ces derniers d'un tiret (-).<br />
+            Exemples : <i>/cote -voiture</i> ou <i>location -rennes</i><br />
+            <br /> Si vous mettez des guillemets (') autour d'un mot ou
+            d'une expression, les résultats n'incluent que les pages où
+            ces mots s'affichent dans le même ordre.<br /> Exemple : <i>'location
+                rennes'</i> ou <i>'aston martin'</i><br /> <br />
+            Lorsque vous ne connaissez pas un terme ou que vous n'êtes
+            pas sûr d'un terme dans votre requête, utilisez un
+            astérisque comme substitut.<br /> Exemple : <i>'/immobilier/*/maison/'</i>
+            <br /> <br /> Pour indiquez le début d'un mot ou d'une
+            expression, utilisez ^.<br /> Pour indiquez la fin d'un mot
+            ou d'une expression, utilisez $. <br /> Exemple : <i>'^/$'</i>
+        </p>
+    </div>
+
+    <!-- <button id="filter-handling" class="google right">Configuration</button> -->
+    <a class="margin-left"
+        href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($interval['base']) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '') ?><?php echo (isset($search) ? '&search=' . $search : '') ?>&compare">
+        <button type="button" class="google">Compare with previous Period</button>
+    </a> <a class="no-margin"
+        href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($interval['base']) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '') ?><?php echo (isset($search) ? '&search=' . $search : '') ?>&compare=year">
+        <button type="button" class="google">Or previous Year</button>
+    </a>
+    <div class="help-tip">
+        <p>
+            <strong>Comparaison avec la période précedente</strong><br />
+            <br />La comparaison s'effectue avec la période equivalente
+            précédente<br /> Exemples : Un jour <i>J</i> sera toujours
+            comparé avec la veille <i>J-1</i> <br />La période <i>J à
+                J-28</i> sera comparée avec la période <i>J-29 à J-56</i><br />
+            <br /> La comparaison s'additionne d'une visualisation des
+            différences entre les deux périodes en pourcentage et en
+            couleur.<br /> Seules les différences significatives sont
+            traitées en couleur.
+        </p>
+    </div>
+
+<?php if (empty($search) === false) { ?>
+     <a class="margin-left"
+        href="index.php?website=<?php echo $website ?>&mode=detail&device=<?php echo $device ?>&query=<?php echo $query ?>&search=<?php echo $search ?>&aggregate"><button
+            type="button" class="google">
+            <span>See <?php echo ($query == 'query') ? 'Keywords' : 'Pages' ?> evolution <i>'<?php echo (strlen($search) > 10) ? substr($search, 0, 7) . '...' : $search ?>'</i></span>
+        </button></a>
+    <div class="help-tip">
+        <p>
+            <strong>Visualisation de l'évolution des <?php echo ($query == 'query') ? 'Keywords' : 'Pages' ?> contenant <i>'<?php echo (strlen($search) > 10) ? substr($search, 0, 7) . '...' : $search ?>'</i></strong><br />
+            <br />Cette vue permet de retrouver la somme des impressions
+            et clicks, jour par jour, pour toutes les requetes ou pages
+            correspondant au filtre de recherche actuel
+        </p>
+    </div><?php } else { ?>
+         <a class="margin-left"
+        href="index.php?website=<?php echo $website ?>&mode=detail&device=<?php echo $device ?>&query=<?php echo $query ?>&search=*&aggregate"><button
+            type="button" class="google">
+            <span>See <?php echo ($query == 'query') ? 'all Keywords' : 'all Pages' ?> evolution</span>
+        </button></a>
+    <div class="help-tip">
+        <p>
+            <strong>Visualisation de l'évolution de <?php echo ($query == 'query') ? 'tous les Keywords' : 'toutes les Pages' ?></strong><br />
+            <br />Cette vue permet de retrouver la somme des impressions
+            et clicks, jour par jour, pour toutes les requetes ou pages
+        </p>
+    </div>
+
+
+    <?php } ?>
+</form>
+
+<datalist id="filters">
+<?php
+foreach ($filters as $filter) {
+    ?>
+  <option label="<?php echo $filter[0] ?>"
+        value="<?php echo $filter[2] ?>">
+<?php
+}
+?>
+</datalist>
+
+<?php echo count($data)?> Results<?php echo (($compare !== false) ? ', compared with previous period' : '')?>
+
+<table id="list" class="tablesorter">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="query left"><?php echo ucfirst($query) ?></th>
+            <th class="impressions">Impressions</th>
+            <?php if ($compare !== false) { ?><th class="compare">%</th><?php } ?>
+            <th class="clicks">Clicks</th>
+            <?php if ($compare !== false) { ?><th class="compare">%</th><?php } ?>
+            <th class="ctr">CTR</th>
+            <?php if ($compare !== false) { ?><th class="compare"></th><?php } ?>
+            <th class="position">Position</th>
+            <?php if ($compare !== false) { ?><th class="compare"></th><?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+$count = 1;
+
+foreach ($data as $item) {
+    ?>
+<tr
+            data-href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?>&mode=detail&search=<?php echo urlencode($item[0]) ?>"
+            class="clickable<?php if ($count % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
+            <td class="left"><?php echo $count++; ?></td>
+            <td class="left"><?php echo $item[0]; ?></td>
+            <td><?php echo $item[1] ?></td>
+            <?php
+    if ($compare !== false) {
+        $percentage = isset($compare['#' . $item[0]]) && ($compare['#' . $item[0]][1] > 0) ? round(($item[1] - $compare['#' . $item[0]][1]) / $compare['#' . $item[0]][1] * 100) : null;
+        ?><td class="_i"><?php echo (($percentage > 0) ? '+' : '') . (($percentage > 999) ? '&infin;' : $percentage) ?></td><?php } ?>
+            <td><?php echo $item[2] ?></td>
+            <?php
+    if ($compare !== false) {
+        $percentage = isset($compare['#' . $item[0]]) && ($compare['#' . $item[0]][2] > 0) ? round(($item[2] - $compare['#' . $item[0]][2]) / $compare['#' . $item[0]][2] * 100) : null;
+        ?><td class="_i"><?php echo (($percentage > 0) ? '+' : '') . (($percentage > 999) ? '&infin;' : $percentage) ?></td><?php } ?>
+            <td><?php echo round($item[2] / $item[1] * 100, 0) ?> %</td>
+            <?php
+
+    if ($compare !== false) {
+        $difference = isset($compare['#' . $item[0]]) && ($compare['#' . $item[0]][1] > 0) ? round($item[2] / $item[1] * 100, 0) - round($compare['#' . $item[0]][2] / $compare['#' . $item[0]][1] * 100, 0) : null;
+        ?><td class="_c"><?php echo (($difference > 0) ? '+' : '') . $difference ?></td><?php } ?>
+            <td><?php echo $item[3] ?></td>
+            <?php
+    if ($compare !== false) {
+        $difference = isset($compare['#' . $item[0]]) ? $item[3] - $compare['#' . $item[0]][3] : null;
+        ?><td class="_p"><?php echo (($difference > 0) ? '+' : '') . $difference ?></td><?php } ?>
+            </tr>
+<?php
+    # Performance Fix
+    if ($count > 5000) {
+        break;
+    }
+}
+?>
+</tbody>
+</table>
+
+<div id="filter-overlay"></div>
+<div id="filter-popup">
+    Gestion des Filtres
+    <div>
+        <span>Filtre *</span> <input type="text" id="filter-value"
+            name="value" value="<?php echo $search ?>" list="filters" />
+    </div>
+    <div>
+        <span>Nom *</span> <input type="text" id="filter-name" value="" />
+    </div>
+    <div class="center">
+        <button id="filter-delete" class="google">Supprimer</button>
+        <button id="filter-add" class="google">Ajouter / Modifier</button>
+        <div class="help-tip">
+            <p>
+                <strong>Filtre de Recherche</strong><br /> <br /> Le
+                champ <i>Filtre</i> contient toujours le filtre en cours
+                d'utilisation sur le site, chaque Filtre est identifié
+                par son nom, qui est unique<br /> <br /> <strong>Ajouter
+                    un filtre</strong> <br />Pour enregistrer un nouveau
+                filtre, spécifiez le nom de ce filtre, puis cliquez sur
+                <i>Ajouter</i><br /> <br /> <strong>Modification/Suppression
+                    de filtre</strong><br /> Selectionnez le filtre,
+                procedez aux changements puis cliquez sur <i>Modifier</i>
+                ou <i>Supprimer</i> <br /> <br /> Il n'y a aucun message
+                de validation/erreur.
+
+        </div>
+        </p>
+    </div>
+</div>
+
+<?php
+$preservals = array();
+$removals = array();
+
+# Finding Negatives
+preg_match_all('/^(?:\-\'([^\']+)\'|\-([^\' ]+))/i', $search, $removal, PREG_SET_ORDER);
+foreach ($removal as $remove) {
+    if (empty(trim(end($remove))) === false) {
+        $removals[] = strtolower(current($remove));
+    }
+    $search = str_replace(reset($remove), '', $search);
+}
+
+preg_match_all('/(?:\-\'([^\']+)\'|[^\w]\-([^\' ]+))/i', $search, $removal, PREG_SET_ORDER);
+foreach ($removal as $remove) {
+    if (empty(trim(end($remove))) === false) {
+        $removals[] = strtolower(current($remove));
+    }
+    $search = str_replace(reset($remove), '', $search);
+}
+
+# Adding Positives Search
+preg_match_all('/(?:\'([^\']+)\'|([^\' ]+))/i', $search, $preserval, PREG_SET_ORDER);
+foreach ($preserval as $preserve) {
+    if (empty(trim(end($preserve))) === false) {
+        $preservals[] = strtolower(current($preserve));
+    }
+}
+?>
+<div class="status">
+    <span class="left">
+<?php echo ($query == 'query') ? ' Keywords' : ' Pages' ?> <?php
+if (count($preservals) > 0) {
+    ?>
+containing <i>'<?php echo implode('\'</i> or <i>\'', $preservals) ?>'</i>
+<?php
+}
+if (count($removals) > 0) {
+    ?>
+<?php echo (count($preservals) > 0) ? ' and ' : ''?>
+not containing <i>'<?php echo implode('\'</i> neither <i>\'', $removals) ?>'</i>
+<?php
+}
+?>
+<?php echo html_interval($interval); ?>
+</span> <span class="right blue">Click on a line to obtain <?php echo ($query == 'query') ? ' Keyword' : ' Page' ?> evolution in time</span>
+</div>

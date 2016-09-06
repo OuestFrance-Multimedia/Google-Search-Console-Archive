@@ -1,0 +1,126 @@
+<script type="text/javascript"
+    src="resources/scripts/highcharts/highcharts-more.js"></script>
+<script type="text/javascript"
+    src="resources/scripts/specific/matrix.js"></script>
+
+<script type="text/javascript">
+<?php
+$var = array();
+foreach ($statistics as $filter => $statistic) {
+    $var[] = '{name: \'' . $filter . '\'' . ',data:[{\'x\':' . $statistic[$xAxis] . ',\'y\':' . $statistic[$yAxis] . ',\'z\':' . $data[$filter][$zAxis] . '}]' . ',showInLegend: true}';
+}
+?>
+
+var var_xAxis = '<?php echo ucfirst($xAxis); ?>';
+var var_yAxis = '<?php echo ucfirst($yAxis); ?>';
+var var_zAxis = '<?php echo ucfirst($zAxis); ?>';
+var var_data = [<?php echo implode(',', $var); ?>];
+</script>
+<form>
+    <span style="margin-left: 82px;"> Axe X <select class="google"
+        name="xAxis">
+            <option
+                <?php echo ($xAxis == 'impressions') ? 'selected="selected"' : ''?>
+                value="impressions">Impressions</option>
+            <option
+                <?php echo ($xAxis == 'clicks') ? 'selected="selected"' : ''?>
+                value="clicks">Clicks</option>
+            <option
+                <?php echo ($xAxis == 'position') ? 'selected="selected"' : ''?>
+                value="position">Position</option>
+    </select>
+    </span> <span>, Axe Y <select class="google" name="yAxis">
+            <option
+                <?php echo ($yAxis == 'impressions') ? 'selected="selected"' : ''?>
+                value="impressions">Impressions</option>
+            <option
+                <?php echo ($yAxis == 'clicks') ? 'selected="selected"' : ''?>
+                value="clicks">Clicks</option>
+            <option
+                <?php echo ($yAxis == 'position') ? 'selected="selected"' : ''?>
+                value="position">Position</option>
+    </select>
+    </span> <span>, Axe Z <select class="google" name="zAxis">
+            <option
+                <?php echo ($zAxis == 'impressions') ? 'selected="selected"' : ''?>
+                value="impressions">Impressions</option>
+            <option
+                <?php echo ($zAxis == 'clicks') ? 'selected="selected"' : ''?>
+                value="clicks">Clicks</option>
+            <option
+                <?php echo ($zAxis == 'position') ? 'selected="selected"' : ''?>
+                value="position">Position</option>
+    </select>
+    </span> <input type="hidden" name="website"
+        value="<?php echo $website ?>" /> <input type="hidden"
+        name="device" value="<?php echo $device ?>" /> <input
+        type="hidden" name="mode" value="<?php echo $mode ?>" /> <input
+        type="hidden" name="query" value="<?php echo $query ?>" /> <input
+        type="hidden" name="date[from]"
+        value="<?php echo $interval['base']['from'] ?>" /> <input
+        type="hidden" name="date[to]"
+        value="<?php echo $interval['base']['to'] ?>" /> <input
+        type="hidden" name="compare" value="<?php echo $compare ?>" />
+    <button type="submit" class="google">Filter</button>
+
+
+    <a class="no-margin right"
+        href="index.php?mode=matrix&website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($interval['base']) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '') ?>&compare=year<?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">
+        <button type="button" class="google">Compare with previous Year</button>
+    </a>
+
+
+</form>
+
+
+<div id="container"></div>
+
+<table id="list" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="query left">Filter</th>
+            <th class="impressions">Impressions</th>
+            <th class="compare">%</th>
+            <th class="clicks">Clicks</th>
+            <th class="compare">%</th>
+            <th class="ctr">CTR</th>
+            <th class="compare"></th>
+            <th class="position">Position</th>
+            <th class="compare"></th>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+$count = 1;
+
+foreach ($statistics as $filter => $statistic) {
+    foreach ($filters as $filterData) {
+        if ($filterData[0] == $filter) {
+            $filter = $filterData;
+        }
+    }
+    ?>
+    <tr
+            class="<?php if ($count % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
+            <td class="left"><?php echo $filter[0] ?><span class="right"><?php echo $filter[2] ?></span></td>
+            <td><?php echo $data[$filter[0]]['impressions'] ?></td>
+            <td class="_i"><?php echo (($statistic['impressions'] > 0) ? '+' : '') . (($statistic['impressions'] > 999) ? '&infin;' : $statistic['impressions']) ?></td>
+            <td><?php echo $data[$filter[0]]['clicks'] ?></td>
+            <td class="_i"><?php echo (($statistic['clicks'] > 0) ? '+' : '') . (($statistic['clicks'] > 999) ? '&infin;' : $statistic['clicks']) ?></td>
+            <td><?php echo round($data[$filter[0]]['clicks'] / $data[$filter[0]]['impressions'] * 100, 0) ?> %</td>
+            <td class="_c"><?php echo (($statistic['ctr'] > 0) ? '+' : '') . (($statistic['ctr'] > 999) ? '&infin;' : $statistic['ctr']) ?></td>
+            <td><?php echo $data[$filter[0]]['position'] ?></td>
+            <td class="_p"><?php echo (($statistic['position'] > 0) ? '+' : '') . (($statistic['position'] > 999) ? '&infin;' : $statistic['position']) ?></td>
+        </tr>
+<?php
+    $count ++;
+}
+?>
+</tbody>
+</table>
+
+<div class="status">
+    <span class="left">Statistics
+    <?php echo html_interval($interval); ?>
+ </span>
+</div>

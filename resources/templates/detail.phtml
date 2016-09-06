@@ -1,0 +1,165 @@
+<script type="text/javascript" src="resources/scripts/specific/detail.js"></script>
+
+<form method="get" action="index.php" class="form">
+    <input type="hidden" name="website" value="<?php echo $website ?>" />
+    <input type="hidden" name="device" value="<?php echo $device ?>" />
+    <input type="hidden" name="query" value="<?php echo $query ?>" />
+    <input type="hidden" name="group" value="<?php echo $group ?>" />
+<?php
+    if ($aggregate == true) { ?>
+    <input type="hidden" name="aggregate"/>
+<?php } ?>
+    <input type="hidden" name="mode" value="detail" />
+    <input type="text" name="search" value="<?php echo $search ?>" />
+        <select name="history">
+            <option value="30" <?php echo ($history == 30) ? 'selected="selected"' : ''?>>from 30 days</option>
+            <option value="180" <?php echo ($history == 180) ? 'selected="selected"' : ''?>>from 6 months</option>
+            <option value="all" <?php echo ($history == 'all') ? 'selected="selected"' : ''?>>from the beginning</option>
+            </select> <input
+        type="submit" value="Go !"></input>
+        <?php if ($group == 'week') { ?>
+<a
+        href="?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (isset($history) ? '&history=' . $history : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?>&group=day"><button
+            type="button" class="">Group by day</button></a>
+<?php } else { ?>
+<a
+        href="?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (isset($history) ? '&history=' . $history : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?>&group=week"><button
+            type="button" class="">Group by week</button></a>
+<?php } ?>
+<?php if ($query == 'query') { ?>
+    <a class="margin-left"
+        href="https://www.google.fr/#q=<?php echo urlencode($search) ?>"
+        target="_blank"><button type="button" class="google">Google
+            Search</button></a> <a
+        href="https://www.google.fr/trends/explore#q=<?php echo urlencode($search) ?>&geo=FR"
+        target="_blank"><button type="button" class="google">Google
+            Trends</button></a>
+<?php } else { ?>
+    <a class="margin-left" href="<?php echo $configuration['websites'][$website]['url'] . urldecode($search) ?>"
+        target="_blank"><button type="button" class="google">Open
+            Page</button></a>
+<?php } ?>
+</form>
+
+<div id="container"></div>
+
+<table id="list" class="tablesorter">
+    <thead>
+        <tr>
+            <th class="query left"><?php echo ucfirst($query) ?></th>
+            <th class="impressions">Impressions</th>
+            <th class="clicks">Clicks</th>
+            <th class="ctr">CTR</th>
+            <th class="position">Position</th>
+            <th class="date">Date</th>
+        </tr>
+    </thead>
+    <tbody>
+<?php
+# Variables for Charts
+$position = array();
+$ctr = array();
+$impression = array();
+$clicks = array();
+
+$count = 0;
+foreach ($data as $item) {
+    # Computing for Charts
+    $position[] = array(
+        strtotime($item[4]) * 1000,
+        $item[3]);
+    $ctr[] = array(
+        strtotime($item[4]) * 1000,
+        round($item[2] / $item[1] * 100, 0));
+    $impression[] = array(
+        strtotime($item[4]) * 1000,
+        $item[1]);
+    $click[] = array(
+        strtotime($item[4]) * 1000,
+        $item[2]);
+    ?>
+<tr data-date="<?php echo $item[4] ?>" <?php if ($query == 'page') { ?>
+            data-href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=keywords&mode=keywords&search=<?php echo urlencode($item[0]) ?>&date[from]=<?php echo date('Y-m-d', strtotime($item[4])) ?>&date[to]=<?php echo date('Y-m-d', strtotime($item[4])) ?>"
+            class="clickable<?php } else { ?>class="<?php } if ($count++ % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
+            <td class="left"><?php echo ($aggregate == true) ? '<i>' . $search . '</i>' : preg_replace('/^(http:\/\/(?:www\.)?(?:[a-z\-]*)\.(?:com|fr)+)/', '', $item[0]) ?></td>
+            <td><?php echo $item[1] ?></td>
+            <td><?php echo $item[2] ?></td>
+            <td><?php echo round($item[2] / $item[1] * 100, 0) ?> %</td>
+            <td><?php echo $item[3] ?></td>
+            <td><?php echo ($group == 'day') ? date('Y-m-d', strtotime($item[4])) : 'S' . date('W', strtotime($item[4])) . ' <i>' . date('o', strtotime($item[4])) . '</i>'?></td>
+        </tr>
+<?php
+}
+?>
+</tbody>
+</table>
+
+<script type="text/javascript">
+var var_position = <?php echo json_encode(array_reverse($position), JSON_NUMERIC_CHECK); ?>;
+var var_ctr = <?php echo json_encode(array_reverse($ctr), JSON_NUMERIC_CHECK); ?>;
+var var_impression = <?php echo json_encode(array_reverse($impression), JSON_NUMERIC_CHECK); ?>;
+var var_click = <?php echo json_encode(array_reverse($click), JSON_NUMERIC_CHECK); ?>;
+var var_interval = <?php echo ($group == 'day') ? 86400000 : 86400000 * 7 ?>;
+</script>
+
+<?php
+$preservals = array();
+$removals = array();
+
+# Aggregate Mode
+if ($aggregate == true) {
+    # Finding Negatives
+    preg_match_all('/^(?:\-\'([^\']+)\'|\-([^\' ]+))/i', $search, $removal, PREG_SET_ORDER);
+    foreach ($removal as $remove) {
+        if (empty(trim(end($remove))) === false) {
+            $removals[] = strtolower(current($remove));
+        }
+        $search = str_replace(reset($remove), '', $search);
+    }
+
+    preg_match_all('/(?:\-\'([^\']+)\'|[^\w]\-([^\' ]+))/i', $search, $removal, PREG_SET_ORDER);
+    foreach ($removal as $remove) {
+        if (empty(trim(end($remove))) === false) {
+            $removals[] = strtolower(current($remove));
+        }
+        $search = str_replace(reset($remove), '', $search);
+    }
+
+    # Adding Positives Search
+    preg_match_all('/(?:\'([^\']+)\'|([^\' ]+))/i', $search, $preserval, PREG_SET_ORDER);
+    foreach ($preserval as $preserve) {
+        if (empty(trim(end($preserve))) === false) {
+            $preservals[] = strtolower(current($preserve));
+        }
+    }
+}
+?>
+<div class="status">
+    <span class="left">
+Statistics <?php echo ($query == 'query') ? (($aggregate == true) ? ' of Keywords' : ' of Keyword ') : (($aggregate == true) ? ' of Pages ' : ' of Page ') ?> <?php
+
+# Aggregate Mode
+if ($aggregate == true) {
+    if (count($preservals) > 0) {
+        ?>
+containing <i>'<?php echo implode('\'</i> or <i>\'', $preservals) ?>'</i>
+<?php
+    }
+    if (count($removals) > 0) {
+        ?>
+<?php echo (count($preservals) > 0) ? ' and ' : ''?>
+not containing <i>'<?php echo implode('\'</i> neither <i>\'', $removals) ?>'</i>
+<?php
+    }
+} else {
+    ?>
+<i><?php echo $search ?></i>
+<?php
+    if ($query == 'page') {
+        ?>
+<span class="right blue">Click on the line to obtain Keywords linked to the Page</span>
+<?php
+    }
+}
+?>
+</div>

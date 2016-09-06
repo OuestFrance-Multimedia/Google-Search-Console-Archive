@@ -1,0 +1,462 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    color: rgb(51, 51, 51);
+    padding-top: 50px;
+    height: 100%;
+    margin: 0;
+    padding-bottom: 30px;
+    padding-left: 0;
+    padding-right: 0;
+    line-height: normal;
+}
+
+@media (max-width : 1441px) {
+    body {
+        padding-top: 100px;
+    }
+}
+
+.left {
+    text-align: left;
+}
+
+.center {
+    text-align: center;
+}
+
+.right {
+    float: right;
+}
+
+#list {
+    font-size: 10pt;
+    cursor: default;
+    margin: 0;
+    background: white;
+    border-spacing: 0;
+    border-collapse: separate;
+    width: 1224px;
+    max-width: 1224px;
+    padding-bottom: 40px;
+}
+
+#list thead tr:hover {
+    background: white;
+    cursor: default;
+}
+
+#list thead th:hover {
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+#list th, #list td {
+    border-bottom-color: rgb(238, 238, 238);
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding: 6px;
+    text-align: right;
+    word-break: break-word;
+    vertical-align: bottom;
+}
+
+#list .left {
+    text-align: left;
+}
+
+#list .center {
+    text-align: center;
+}
+
+#list .right {
+    float: right;
+}
+
+#list tr.odd {
+    background-color: rgb(249, 249, 249);
+}
+
+#list tr:hover {
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+#list thead th:first-child {
+    padding: 6px;
+    width: 60px;
+}
+
+#list thead th:hover {
+    background-color: white;
+    cursor: pointer;
+}
+
+#list thead th.query {
+    min-width: 620px;
+}
+
+#list thead th.impressions {
+    width: 106px;
+}
+
+#list thead th.clicks {
+    width: 66px;
+}
+
+#list thead th.ctr, #list thead th.position {
+    width: 64px;
+}
+
+#list thead th.compare {
+    width: 46px;
+}
+
+.blue {
+    color: rgb(66, 133, 244);
+}
+
+.margin-left {
+    margin-left: 30px;
+}
+
+.status {
+    position: fixed;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    border-width: 0 0 1px;
+    z-index: 1030;
+    background-color: #000;
+    border-color: #121212;
+    color: white;
+    font-size: 14px;
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+}
+
+.navbar {
+    position: fixed;
+    right: 0;
+    left: 0;
+    top: 0;
+    z-index: 1030;
+    background-color: #222;
+    border: none;
+    color: white;
+    font-size: 14px;
+    min-height: initial;
+    margin-bottom: 0px;
+}
+
+.nav {
+    min-height: 0;
+    float: left;
+    list-style: none;
+    margin: 5px;
+    padding-left: 0px;
+}
+
+.nav>li {
+    display: block;
+    position: relative;
+    float: left;
+}
+
+.nav>li:first-child {
+    padding-right: 10px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    color: #FFF;
+}
+
+.nav>li.selected {
+    background-color: #24C4E1;
+}
+
+.nav>li>a:hover {
+    background-color: black;
+    transition: background-color 0.5s ease 0s, color 0.5s ease 0s;
+}
+
+.nav>li>a, .nav>li>input {
+    display: block;
+    position: relative;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    cursor: pointer;
+    color: #EEE;
+    text-decoration: none;
+}
+
+.separator {
+    border-left: 1px solid #CCC;
+}
+
+form {
+    margin-bottom: 0;
+    margin-top: 0; //
+    margin-left: 10px;
+}
+
+.form {
+    margin-bottom: 20px;
+}
+
+input, textarea, keygen, select, button {
+    font-family: 'Roboto', sans-serif;
+}
+
+input, button, select {
+    height: 33px;
+    padding-left: 6px;
+    border: 1px solid rgb(222, 222, 222);
+}
+
+input:focus {
+    border: 1px solid rgb(238, 238, 238);
+}
+
+input[type="text"] {
+    width: 300px;
+}
+
+input[type="submit"], button {
+    background-color: #eee;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid rgb(238, 238, 238);
+    cursor: pointer;
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    z-index: 2;
+}
+
+select.google, button.google {
+    background-color: rgb(72, 133, 237);
+    color: white;
+}
+
+button.trace {
+	background-color: rgb(219, 50, 54);
+    color: white;
+    margin-bottom: 6px;
+}
+
+div.trace pre {
+	border: 0;
+	line-height: 1;
+}
+
+input[type="submit"]:hover, button:hover {
+    background-color: black;
+    color: white;
+}
+
+input.datepicker {
+    background: #24C4E1;
+    border: none;
+    width: 240px;
+    cursor: pointer;
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    padding-left: 0;
+    text-align: center;
+}
+
+input.date:hover {
+    background-color: black;
+    transition: background-color 0.5s ease 0s, color 0.5s ease 0s;
+}
+.container {
+    margin: 0 auto;
+    width: 1224px;
+    background-color: #FEFEFE;
+    clear: both;
+    position: relative;
+    padding: 0;
+}
+
+.chart {
+    float: left;
+    height: 400px;
+    width: 600px;
+}
+
+.full-chart {
+    margin: 0 auto;
+    height: 800px;
+    width: 1224px;
+    margin-right: -8px;
+}
+
+#filter-overlay {
+    visibility: hidden;
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: .70;
+    z-index: 9999;
+}
+
+#filter-popup {
+    visibility: hidden;
+    background: #fff;
+    padding: 10px 20px 5px 20px;
+    margin: 20px;
+    float: left;
+    font-size: 1.2em;
+    position: fixed;
+    top: 20%;
+    left: 33%;
+    z-index: 99999;
+    width: 390px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+}
+
+#filter-popup div {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#filter-popup>.help-tip {
+    margin-left: 10px;
+}
+
+#filter-popup span {
+    width: 80px;
+    font-size: 14px;
+    display: inline-block;
+}
+
+.no-margin {
+    margin-left: -5px;
+}
+
+.help-tip {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    background-color: rgb(66, 133, 244); //
+    border-radius: 50%;
+    margin-left: -5px;
+    width: 33px;
+    height: 33px;
+    font-size: 14px;
+    line-height: 33px;
+    cursor: default;
+    border: 1px solid rgb(238, 238, 238);
+}
+
+.help-tip:before {
+    content: '?';
+    font-weight: bold;
+    color: #fff;
+}
+
+.help-tip:hover {
+    cursor: help;
+    background-color: black;
+    color: white;
+}
+
+.help-tip:hover p {
+    display: block;
+    transform-origin: 100% 0%;
+    -webkit-animation: fadeIn 0.3s ease-in-out;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.help-tip p { /* The tooltip */
+    display: none;
+    text-align: left;
+    background-color: rgb(66, 133, 244);
+    padding: 20px;
+    width: 400px;
+    position: absolute;
+    border-radius: 1px;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    right: 0px;
+    color: #FFF;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.help-tip p:before { /* The pointer of the tooltip */
+    position: absolute;
+    content: '';
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-bottom-color: rgb(66, 133, 244);
+    right: 10px;
+    top: -12px;
+    padding: 0;
+    margin: 0;
+}
+
+.help-tip p:after { /* Prevents the tooltip from being hidden */
+    width: 100%;
+    height: 40px;
+    content: '';
+    position: absolute;
+    top: -40px;
+    left: 0;
+}
+
+/* CSS animation */
+@
+-webkit-keyframes fadeIn { 0% {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+100%
+{
+opacity
+
+
+:
+
+
+100%;
+transform
+
+
+:
+
+ 
+
+scale
+
+
+(1);
+}
+}
+@
+keyframes fadeIn { 0% {
+    opacity: 0;
+}
+
+100%
+{
+opacity
+
+
+:
+
+
+100%;
+}
+}}

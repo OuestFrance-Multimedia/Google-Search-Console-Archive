@@ -1,0 +1,165 @@
+<html>
+<head>
+<meta charset="UTF-8">
+
+<script type="text/javascript"
+    src="resources/scripts/jquery-2.1.4.min.js"></script>
+<script type="text/javascript" src="resources/scripts/bootstrap.min.js"></script>
+<script type="text/javascript"
+    src="resources/scripts/table/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="resources/scripts/table/graphup.js"></script>
+<script type="text/javascript"
+    src="resources/scripts/highcharts/highcharts.js"></script>
+<script type="text/javascript"
+    src="resources/scripts/picker/moment.min.js"></script>
+<script type="text/javascript"
+    src="resources/scripts/picker/daterangepicker.js"></script>
+
+<link href='resources/style/bootstrap.css' rel='stylesheet'
+    type='text/css'>
+<link href='resources/style/base.css' rel='stylesheet' type='text/css'>
+<link href='resources/style/picker/daterangepicker.css' rel='stylesheet'
+    type='text/css'>
+
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,700'
+    rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+<?php
+# Stream Before HTML Output
+if (empty($stream) !== true) {
+?>
+    <div class="container">
+        <button type="button" id="trace" class="trace">Show Trace & Debug output</button>
+        <div class="trace">
+            <pre>
+            <?php echo strip_tags($stream, '<b>') ?>
+            </pre>
+        </div>
+    </div>
+    <script>
+    	$('#trace').click(function(){
+    	    $('div.trace').toggle();
+    	});
+    </script>
+<?php
+} ?>
+
+    <div class="navbar">
+        <ul class="nav">
+            <li>Website :</li>
+<?php
+foreach ($configuration['websites'] as $site => $unused) { ?>
+            <li
+                <?php echo ($website == $site) ? 'class="selected"' : '' ?>><a
+                href="?website=<?php echo $site ?>&device=<?php echo $device ?>&query=<?php echo ($query == 'keywords') ? '' : $query ?><?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo ((isset($mode) && ($mode == 'matrix')) ? '&mode=' . $mode : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>"><?php echo strtoupper($site) ?></a></li>
+<?php
+} ?>
+        </ul>
+        <ul class="nav">
+            <li class="separator">Device :</li>
+            <li
+                <?php echo (($device == 'desktop') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=desktop&query=<?php echo $query ?><?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">Desktop</a></li>
+            <li
+                <?php echo (($device == 'tablet') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=tablet&query=<?php echo $query ?><?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">Tablet</a></li>
+            <li
+                <?php echo (($device == 'mobile') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=mobile&query=<?php echo $query ?><?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">Mobile</a></li>
+            <li
+                <?php echo (($device == '*') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=*&query=<?php echo $query ?><?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo (isset($search) ? '&search=' . $search : '') ?><?php echo (isset($mode) ? '&mode=' . $mode : '') ?><?php echo (($aggregate == true) ? '&aggregate' : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">All</a></li>
+        </ul>
+        <ul class="nav">
+            <li class="separator">Type :</li>
+            <li
+                <?php echo (($query == 'query') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=<?php echo $device ?>&query=query<?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo ((isset($mode) && ($mode == 'matrix')) ? '&mode=' . $mode : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">Keyword</a></li>
+            <li
+                <?php echo (($query == 'page') ? 'class="selected"' : '') ?>><a
+                href="?website=<?php echo $website ?>&device=<?php echo $device ?>&query=page<?php echo (isset($interval['base']) && ($mode != 'detail')) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '' ?><?php echo ((isset($mode) && ($mode == 'matrix')) ? '&mode=' . $mode : '') ?><?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">Page</a></li>
+        </ul>
+<?php
+# List Mode
+if ($mode != 'detail') {
+    ?>
+    <script type="text/javascript">
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+            showDropdowns: true,
+            showWeekNumbers: true,
+            autoApply: true,
+            ranges: {
+                '<?php echo date('d/m/Y', strtotime($last)) ?>': [moment('<?php echo date('c', strtotime($last)) ?>'), moment('<?php echo date('c', strtotime($last)) ?>')],
+                'D - 7': [moment('<?php echo date('c', strtotime($last)) ?>').subtract(6, 'days'), moment('<?php echo date('c', strtotime($last)) ?>')],
+                'D - 28': [moment('<?php echo date('c', strtotime($last)) ?>').subtract(27, 'days'), moment('<?php echo date('c', strtotime($last)) ?>')],
+                'D - 90': [moment('<?php echo date('c', strtotime($last)) ?>').subtract(89, 'days'), moment('<?php echo date('c', strtotime($last)) ?>')],
+                'D - 365': [moment('<?php echo date('c', strtotime($last)) ?>').subtract(364, 'days'), moment('<?php echo date('c', strtotime($last)) ?>')]
+             },
+             locale: {
+                 format: 'DD/MM/YYYY',
+                 separator: ' to ' ,
+                 applyLabel: 'Apply',
+                 cancelLabel: 'Cancel',
+                 fromLabel: 'From',
+                 toLabel: 'to',
+                 customRangeLabel: 'Custom',
+                 firstDay: 1
+             },
+            startDate: moment('<?php echo date('c', strtotime($interval['base']['from'])) ?>'),
+            endDate: moment('<?php echo date('c', strtotime($interval['base']['to'])) ?>'),
+            maxDate: moment('<?php echo date('c', strtotime($last)) ?>'),
+            opens: "left"
+        }, function(start, end, label) {
+            	$('input[name="date[from]"]').val(start.format('YYYY-MM-DD'));
+            	$('input[name="date[to]"]').val(end.format('YYYY-MM-DD'));
+            	$('#date-form').submit();
+        });
+    });
+    </script>
+
+        <ul class="nav" id="date-container">
+            <li class="separator">Date :</li>
+            <li>
+                <form id="date-form">
+                    <input type="hidden" name="website"
+                        value="<?php echo $website ?>" /><input
+                        type="hidden" name="mode"
+                        value="<?php echo $mode ?>" /> <input
+                        type="hidden" name="search"
+                        value="<?php echo $search ?>" /> <input
+                        type="hidden" name="device"
+                        value="<?php echo $device ?>" /> <input
+                        type="hidden" name="query"
+                        value="<?php echo $query ?>" /> <input
+                        type="hidden" name="date[from]"
+                        value="<?php echo $interval['base']['from'] ?>" />
+                    <input type="hidden" name="date[to]"
+                        value="<?php echo $interval['base']['to'] ?>" />
+                        <?php
+                        if ($mode == 'matrix') { ?>
+                        <input type="hidden" name="xAxis"
+                        value="<?php echo $xAxis ?>" /> <input
+                        type="hidden" name="yAxis"
+                        value="<?php echo $yAxis ?>" /> <input
+                        type="hidden" name="zAxis"
+                        value="<?php echo $zAxis ?>" />
+                        <?php } ?>
+
+                </form> <input class="datepicker" type="text"
+                name="daterange" />
+            </li>
+        </ul>
+<?php } ?>
+
+        <ul class="nav">
+            <li></li>
+            <li
+                class="<?php echo (($mode == 'matrix') ? 'selected' : '') ?>"><a
+                href="?website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (($mode == 'matrix') ? '' : '&mode=matrix') ?>"><?php echo (($mode == 'matrix') ? 'Exit ' : '') ?>Matrix</a></li>
+            <li><a href="?">Reset</a></li>
+        </ul>
+    </div>
+    <div class="container">

@@ -1,0 +1,37 @@
+<div class="status">
+Keywords linked to Page <em><?php echo $search ?></em>
+<?php echo html_interval($interval); ?>
+</div>
+
+<table id="list" class="tablesorter">
+    <thead>
+        <tr>
+            <th></th>
+            <th class="query left"><?php echo ucfirst($query) ?></th>
+            <th class="impressions">Impressions</th>
+            <?php if ($compare !== false) { ?><th class="compare">%</th><?php } ?>
+            <th class="clicks">Clicks</th>
+            <?php if ($compare !== false) { ?><th class="compare">%</th><?php } ?>
+            <th class="ctr">CTR</th>
+            <?php if ($compare !== false) { ?><th class="compare">%</th><?php } ?>
+            <th class="position">Position</th>
+            <?php if ($compare !== false) { ?><th class="compare"></th><?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+
+<?php
+$count = 1;
+foreach ($data as $key => $item) {
+    ?>
+<tr class="<?php if ($count % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
+            <td class="left"><?php echo $count++ ?></td>
+            <td class="left"><?php echo $key ?></td>
+            <td><?php echo $item['impressions'] ?></td>
+            <td><?php echo $item['clicks'] ?></td>
+            <td><?php echo round($item['clicks'] / $item ['impressions'] * 100, 0) ?> %</td>
+            <td><?php echo round($item['position'], 1) ?></td>
+            </tr>
+<?php
+}
+?>
