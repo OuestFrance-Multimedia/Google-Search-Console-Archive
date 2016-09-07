@@ -43,7 +43,6 @@ class Database
     {
         # Lazy Connection
         if (isset(self::$_mysql) === false) {
-
             # Creating New Connection
             self::$_mysql = mysqli_init();
             self::$_mysql->real_connect(self::$_database['host'], self::$_database['username'], self::$_database['password'], self::$_database['database'], self::$_database['port'], null, MYSQLI_CLIENT_COMPRESS);

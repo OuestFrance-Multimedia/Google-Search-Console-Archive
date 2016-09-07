@@ -8,14 +8,14 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 # Bootstrap
@@ -85,10 +85,8 @@ echo PHP_EOL . 'Calling Search Console API ';
 
 # Iterating each Website
 foreach ($configuration['websites'] as $website) {
-
     # Iterating each Device
     foreach ($configuration['device'] as $device) {
-
         # Iterating each Days
         for ($time = $date['from']; strtotime($time) <= strtotime($date['to']); $time = date('Y-m-d', strtotime($time . ' +1 day'))) {
             # WebmasterTools Request Object
@@ -98,7 +96,6 @@ foreach ($configuration['websites'] as $website) {
             if (($data = $query->pages($website, $device, array(
                 'from' => $time,
                 'to' => $time))) != false) {
-
                 # Using Results
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
@@ -121,7 +118,6 @@ foreach ($configuration['websites'] as $website) {
             if (($data = $query->queries($website, $device, array(
                 'from' => $time,
                 'to' => $time))) != false) {
-
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
                     $sql[] = 'REPLACE INTO ' . str_replace(array(

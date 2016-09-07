@@ -8,16 +8,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 header('Content-Type: text/html; charset=utf-8');
 
 # Stream
@@ -45,7 +44,7 @@ $last = date('Y-m-d', $database->last($query, $website, ($device == '*') ? 'desk
 
 # Page/Query Detail Mode
 switch ($mode) {
-    case 'detail':
+    case 'detail' :
         # Making Interval
         if (is_numeric($history)) {
             $interval['base'] = array(
@@ -67,7 +66,7 @@ switch ($mode) {
         include dirname(__FILE__) . '/resources/templates/detail.phtml';
 
         break;
-    case 'keywords':
+    case 'keywords' :
         # Keywords Mode : Keywords that lead to a specific Page
         $interval['base'] = isset($_REQUEST['date']) ? $_REQUEST['date'] : array(
             'from' => $last,
@@ -106,7 +105,7 @@ switch ($mode) {
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/keywords.phtml';
         break;
-    case 'matrix':
+    case 'matrix' :
         # Getting Axis Variables
         $xAxis = isset($_REQUEST['xAxis']) ? $_REQUEST['xAxis'] : 'impressions';
         $yAxis = isset($_REQUEST['yAxis']) ? $_REQUEST['yAxis'] : 'clicks';
@@ -155,7 +154,6 @@ switch ($mode) {
 
         # Making request for each filter
         foreach ($filters as $filter) {
-
             # Making Query
             $items = $database->detail($query, $website, $device, $filter[2], true, $interval['compare']);
 
@@ -205,7 +203,7 @@ switch ($mode) {
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/matrix.phtml';
         break;
-    default:
+    default :
         # List Mode : Keywords/Pages for website
         $interval['base'] = isset($_REQUEST['date']) ? $_REQUEST['date'] : array(
             'from' => $last,
