@@ -8,16 +8,15 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
-
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
  * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-
 class Database
 {
     private static $_configuration = null;
@@ -47,13 +46,7 @@ class Database
 
             # Creating New Connection
             self::$_mysql = mysqli_init();
-            self::$_mysql->real_connect(self::$_database['host'],
-                                        self::$_database['username'],
-                                        self::$_database['password'],
-                                        self::$_database['database'],
-                                        self::$_database['port'],
-                                        null,
-                                        MYSQLI_CLIENT_COMPRESS);
+            self::$_mysql->real_connect(self::$_database['host'], self::$_database['username'], self::$_database['password'], self::$_database['database'], self::$_database['port'], null, MYSQLI_CLIENT_COMPRESS);
             self::$_mysql->set_charset('utf8');
 
             # Checking Connection State
@@ -81,9 +74,11 @@ class Database
     public function average($date, $website, $device)
     {
         $query = 'SELECT AVG(position) AS average
-                  FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                  FROM ' . str_replace(array(
+            '{%device%}',
+            '{%website%}'), array(
+            self::_handle()->real_escape_string($device),
+            self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
                   WHERE date = \'' . self::_handle()->real_escape_string($date) . '\';';
 
         # Executing Query
@@ -102,23 +97,29 @@ class Database
     {
         # MAX(date) Query by Table
         switch ($query) {
-            case 'query':
+            case 'query' :
                 $query = 'SELECT MAX(date) AS date
-                          FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                               array(self::_handle()->real_escape_string($device),
-                                                     self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']);
+                          FROM ' . str_replace(array(
+                    '{%device%}',
+                    '{%website%}'), array(
+                    self::_handle()->real_escape_string($device),
+                    self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']);
                 break;
-            case 'page':
+            case 'page' :
                 $query = 'SELECT MAX(date) AS date
-                          FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                               array(self::_handle()->real_escape_string($device),
-                                                     self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
+                          FROM ' . str_replace(array(
+                    '{%device%}',
+                    '{%website%}'), array(
+                    self::_handle()->real_escape_string($device),
+                    self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
                 break;
-            case 'keywords':
+            case 'keywords' :
                 $query = 'SELECT MAX(date) AS date
-                          FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                               array(self::_handle()->real_escape_string($device),
-                                                     self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
+                          FROM ' . str_replace(array(
+                    '{%device%}',
+                    '{%website%}'), array(
+                    self::_handle()->real_escape_string($device),
+                    self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
                 break;
         }
 
@@ -142,17 +143,21 @@ class Database
 
         # MAX(date) Query by Table
         switch ($query) {
-            case 'query':
+            case 'query' :
                 $query = 'SELECT COUNT(DISTINCT query) AS count
-                          FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                               array(self::_handle()->real_escape_string($device),
-                                                     self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']);
+                          FROM ' . str_replace(array(
+                    '{%device%}',
+                    '{%website%}'), array(
+                    self::_handle()->real_escape_string($device),
+                    self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']);
                 break;
-            case 'page':
+            case 'page' :
                 $query = 'SELECT COUNT(DISTINCT page) AS count
-                          FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                               array(self::_handle()->real_escape_string($device),
-                                                     self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
+                          FROM ' . str_replace(array(
+                    '{%device%}',
+                    '{%website%}'), array(
+                    self::_handle()->real_escape_string($device),
+                    self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']);
                 break;
         }
 
@@ -271,39 +276,43 @@ class Database
             }
 
             # Removing ^ & $ Wilcards
-            $removals = str_replace(array('^', '$'), '', $removals);
-            $preservals = str_replace(array('^', '$'), '', $preservals);
+            $removals = str_replace(array(
+                '^',
+                '$'), '', $removals);
+            $preservals = str_replace(array(
+                '^',
+                '$'), '', $preservals);
 
             # Details Query by Table
             switch ($query) {
-                case 'query':
+                case 'query' :
                     # Data Aggregated by days
                     $query = 'SELECT query,
                               SUM(impressions) AS impressions,
                               SUM(clicks) AS clicks,
                               ROUND(AVG(position), 1) AS position,
                              ' . $date . '
-                              FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
-                              WHERE ' . ((empty($interval) === false) ? (is_array($interval) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') : '')
-                                      . ((empty($interval) === false) && (empty($removals) === false) ? ' AND ' : '') . ((empty($removals) === false) ? ' (' . implode(' AND ', $removals) . ') ' : '')
-                                      . (((empty($interval) === false) || (empty($removals) === false)) && (empty($preservals) === false) ? ' AND ' : '') . ((empty($preservals) === false) ? ' (' . implode(' OR ', $preservals) . ')' : '') . '
+                              FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                              WHERE ' . ((empty($interval) === false) ? (is_array($interval) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') : '') . ((empty($interval) === false) && (empty($removals) === false) ? ' AND ' : '') . ((empty($removals) === false) ? ' (' . implode(' AND ', $removals) . ') ' : '') . (((empty($interval) === false) || (empty($removals) === false)) && (empty($preservals) === false) ? ' AND ' : '') . ((empty($preservals) === false) ? ' (' . implode(' OR ', $preservals) . ')' : '') . '
                               GROUP BY ' . $date . '
                               ORDER BY ' . $date . ' DESC';
                     break;
-                case 'page':
+                case 'page' :
                     $query = 'SELECT page,
                               SUM(impressions) AS impressions,
                               SUM(clicks) AS clicks,
                               ROUND(AVG(position), 1) AS position,
                              ' . $date . '
-                              FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
-                              WHERE ' . ((empty($interval) === false) ? (is_array($interval) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') : '')
-                                      . ((empty($interval) === false) && (empty($removals) === false) ? ' AND ' : '') . ((empty($removals) === false) ? ' (' . implode(' AND ', $removals) . ') ' : '')
-                                      . (((empty($interval) === false) || (empty($removals) === false)) && (empty($preservals) === false) ? ' AND ' : '') . ((empty($preservals) === false) ? ' (' . implode(' OR ', $preservals) . ')' : '') . '
+                              FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
+                              WHERE ' . ((empty($interval) === false) ? (is_array($interval) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') : '') . ((empty($interval) === false) && (empty($removals) === false) ? ' AND ' : '') . ((empty($removals) === false) ? ' (' . implode(' AND ', $removals) . ') ' : '') . (((empty($interval) === false) || (empty($removals) === false)) && (empty($preservals) === false) ? ' AND ' : '') . ((empty($preservals) === false) ? ' (' . implode(' OR ', $preservals) . ')' : '') . '
                               GROUP BY ' . $date . '
                               ORDER BY ' . $date . ' DESC';
             }
@@ -317,32 +326,34 @@ class Database
         } else {
             # Basic Detail Mode Query by Table
             switch ($query) {
-                case 'query':
+                case 'query' :
                     # Data Aggregated by days
                     $query = 'SELECT query,
                               SUM(impressions) AS impressions,
                               SUM(clicks) AS clicks,
                               ROUND(AVG(position), 1) AS position,
                              ' . $date . '
-                              FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
-                              WHERE query = \'' . self::_handle()->real_escape_string(strtolower($search)) . '\''
-                                    . ((empty($interval) === false) ? (is_array($interval) ? ' AND date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' AND date = \'' . $interval . '\'') : '') . '
+                              FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                              WHERE query = \'' . self::_handle()->real_escape_string(strtolower($search)) . '\'' . ((empty($interval) === false) ? (is_array($interval) ? ' AND date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' AND date = \'' . $interval . '\'') : '') . '
                               GROUP BY ' . $date . '
                               ORDER BY ' . $date . ' DESC';
                     break;
-                case 'page':
+                case 'page' :
                     $query = 'SELECT page,
                               SUM(impressions) AS impressions,
                               SUM(clicks) AS clicks,
                               ROUND(AVG(position), 1) AS position,
                              ' . $date . '
-                              FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
-                              WHERE page = \'' . self::_handle()->real_escape_string(strtolower($search)) . '\''
-                                    . ((empty($interval) === false) ? (is_array($interval) ? ' AND date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' AND date = \'' . $interval . '\'') : '') . '
+                              FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
+                              WHERE page = \'' . self::_handle()->real_escape_string(strtolower($search)) . '\'' . ((empty($interval) === false) ? (is_array($interval) ? ' AND date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' AND date = \'' . $interval . '\'') : '') . '
                               GROUP BY ' . $date . '
                               ORDER BY ' . $date . ' DESC';
                     break;
@@ -360,7 +371,7 @@ class Database
         if ($group == 'week') {
             foreach ($data as $date => $_data) {
                 unset($data[$date]);
-                $date = date('Y-m-d', strtotime(substr($_data[4], 0, 4) . 'W' . substr($_data[4], -2)));
+                $date = date('Y-m-d', strtotime(substr($_data[4], 0, 4) . 'W' . substr($_data[4], - 2)));
                 $_data[4] = $date;
                 $data[$date] = $_data;
             }
@@ -439,21 +450,27 @@ class Database
         }
 
         # Removing ^ & $ Wilcards
-        $removals = str_replace(array('^', '$'), '', $removals);
-        $preservals = str_replace(array('^', '$'), '', $preservals);
+        $removals = str_replace(array(
+            '^',
+            '$'), '', $removals);
+        $preservals = str_replace(array(
+            '^',
+            '$'), '', $preservals);
 
         # Details Query by Table
         switch ($query) {
-            case 'query':
+            case 'query' :
                 # Data Aggregated, from {last entry} to {last entry - $date} days
                 if ($aggregate == true) {
                     $query = 'SELECT query,
                                      SUM(impressions) AS impressions,
                                      SUM(clicks) AS clicks,
                                      ROUND(AVG(position), 1) AS position
-                               FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                               FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
                                WHERE ' . ((is_array($interval)) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') . ((empty($removals) === false) ? ' AND (' . implode(' AND ', $removals) . ')' : '') . ((empty($preservals) === false) ? ' AND (' . implode(' OR ', $preservals) . ')' : '') . '
                                GROUP BY query
                                ORDER BY clicks DESC';
@@ -462,22 +479,26 @@ class Database
                                      impressions,
                                      clicks,
                                      position
-                               FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                               FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
                                WHERE ' . ((is_array($interval)) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') . ((empty($removals) === false) ? ' AND (' . implode(' AND ', $removals) . ')' : '') . ((empty($preservals) === false) ? ' AND (' . implode(' OR ', $preservals) . ')' : '') . '
                                ORDER BY clicks DESC';
                 }
                 break;
-            case 'page':
+            case 'page' :
                 if ($aggregate == true) {
                     $query = 'SELECT page,
                                      SUM(impressions) AS impressions,
                                      SUM(clicks) AS clicks,
                                      ROUND(AVG(position), 1) AS position
-                               FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
+                               FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
                                WHERE ' . ((is_array($interval)) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') . ((empty($removals) === false) ? ' AND (' . implode(' AND ', $removals) . ')' : '') . ((empty($preservals) === false) ? ' AND (' . implode(' OR ', $preservals) . ')' : '') . '
                                GROUP BY page
                                ORDER BY clicks DESC';
@@ -486,9 +507,11 @@ class Database
                                      impressions,
                                      clicks,
                                      position
-                               FROM ' . str_replace(array('{%device%}', '{%website%}'),
-                                       array(self::_handle()->real_escape_string($device),
-                                             self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
+                               FROM ' . str_replace(array(
+                        '{%device%}',
+                        '{%website%}'), array(
+                        self::_handle()->real_escape_string($device),
+                        self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['pages']) . '
                                WHERE ' . ((is_array($interval)) ? ' date >= \'' . $interval['from'] . '\' AND date <= \'' . $interval['to'] . '\' ' : ' date = \'' . $interval . '\'') . ((empty($removals) === false) ? ' AND (' . implode(' AND ', $removals) . ')' : '') . ((empty($preservals) === false) ? ' AND (' . implode(' OR ', $preservals) . ')' : '') . '
                                ORDER BY clicks DESC';
                 }
@@ -508,7 +531,7 @@ class Database
     public function filters($query, $website, $action = null, $data = null)
     {
         switch ($action) {
-            case 'delete':
+            case 'delete' :
                 $query = 'DELETE
                           FROM filters
                           WHERE website = \'' . self::_handle()->real_escape_string(strtolower($website)) . '\'
@@ -523,7 +546,7 @@ class Database
                 }
                 return true;
                 break;
-            case 'add':
+            case 'add' :
                 $query = 'INSERT INTO filters
                           (`name`,`query`,`value`,`website`)
                           VALUES (\'' . self::_handle()->real_escape_string(strtoupper($data['name'])) . '\',
@@ -538,7 +561,7 @@ class Database
                 }
                 return true;
                 break;
-            default:
+            default :
                 $query = 'SELECT *
                           FROM filters
                           WHERE website = \'' . self::_handle()->real_escape_string(strtolower($website)) . '\'

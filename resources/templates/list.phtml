@@ -14,20 +14,18 @@
     <div class="help-tip">
         <p>
             <strong>Search Filter</strong><br /> <br />
-            Pour
-            exclure les résultats de recherche incluant un mot ou une
-            page précise, précédez ces derniers d'un tiret (-).<br />
-            Exemples : <i>/cote -voiture</i> ou <i>location -rennes</i><br />
-            <br /> Si vous mettez des guillemets (') autour d'un mot ou
-            d'une expression, les résultats n'incluent que les pages où
-            ces mots s'affichent dans le même ordre.<br /> Exemple : <i>'location
-                rennes'</i> ou <i>'aston martin'</i><br /> <br />
-            Lorsque vous ne connaissez pas un terme ou que vous n'êtes
-            pas sûr d'un terme dans votre requête, utilisez un
-            astérisque comme substitut.<br /> Exemple : <i>'/immobilier/*/maison/'</i>
-            <br /> <br /> Pour indiquez le début d'un mot ou d'une
-            expression, utilisez ^.<br /> Pour indiquez la fin d'un mot
-            ou d'une expression, utilisez $. <br /> Exemple : <i>'^/$'</i>
+            Spaces ( ) are counted as an OR operator.<br/><br/>
+            When you use a dash (-) before a word, it excludes all items with that info from your results.<br />
+            Example: <i>jaguar speed -car</i><br />
+            <br />When you put a word or sentence in simple quotes ('), the results will only include results with the same words
+            in the same order as the ones inside the quotes.<br/>
+            Only use this if you're looking for an exact word or phrase, otherwise you'll exclude many helpful results by mistake.
+            <br />Example: <i>'imagine all the people'</i> or <i>'aston martin'</i><br /> <br />
+            Add an asterisk (*) as a placeholder for any unknown or wildcard terms.
+            <br />Example: <i>'/homes/*/rentals/'</i>
+            <br /> <br />
+            To search all items that must begin by a specific term, use (^).
+            <br />Similarly to specifiy search with a term that must end each item, use ($). <br />Example : <i>'^/$'</i>
         </p>
     </div>
 
@@ -41,47 +39,24 @@
     </a>
     <div class="help-tip">
         <p>
-            <strong>Comparaison avec la période précedente</strong><br />
-            <br />La comparaison s'effectue avec la période equivalente
-            précédente<br /> Exemples : Un jour <i>J</i> sera toujours
-            comparé avec la veille <i>J-1</i> <br />La période <i>J à
-                J-28</i> sera comparée avec la période <i>J-29 à J-56</i><br />
-            <br /> La comparaison s'additionne d'une visualisation des
-            différences entre les deux périodes en pourcentage et en
-            couleur.<br /> Seules les différences significatives sont
-            traitées en couleur.
+            <strong>Compare with the previous period</strong><br />
+            <br />Comparison is always done with the previous period to date.<br />
+            Example : Day <i>D</i> will always be compared to <i>D - 1</i> <br />Period from <i>D to
+                D - 28</i> will be compared to <i>D - 29 to D - 56</i>
         </p>
     </div>
 
-<?php if (empty($search) === false) { ?>
      <a class="margin-left"
         href="index.php?website=<?php echo $website ?>&mode=detail&device=<?php echo $device ?>&query=<?php echo $query ?>&search=<?php echo $search ?>&aggregate"><button
             type="button" class="google">
-            <span>See <?php echo ($query == 'query') ? 'Keywords' : 'Pages' ?> evolution <i>'<?php echo (strlen($search) > 10) ? substr($search, 0, 7) . '...' : $search ?>'</i></span>
+            <span>See <?php echo ($query == 'query') ? 'keywords' : 'pages' ?> evolution in time for current filter</span>
         </button></a>
     <div class="help-tip">
         <p>
-            <strong>Visualisation de l'évolution des <?php echo ($query == 'query') ? 'Keywords' : 'Pages' ?> contenant <i>'<?php echo (strlen($search) > 10) ? substr($search, 0, 7) . '...' : $search ?>'</i></strong><br />
-            <br />Cette vue permet de retrouver la somme des impressions
-            et clicks, jour par jour, pour toutes les requetes ou pages
-            correspondant au filtre de recherche actuel
-        </p>
-    </div><?php } else { ?>
-         <a class="margin-left"
-        href="index.php?website=<?php echo $website ?>&mode=detail&device=<?php echo $device ?>&query=<?php echo $query ?>&search=*&aggregate"><button
-            type="button" class="google">
-            <span>See <?php echo ($query == 'query') ? 'all Keywords' : 'all Pages' ?> evolution</span>
-        </button></a>
-    <div class="help-tip">
-        <p>
-            <strong>Visualisation de l'évolution de <?php echo ($query == 'query') ? 'tous les Keywords' : 'toutes les Pages' ?></strong><br />
-            <br />Cette vue permet de retrouver la somme des impressions
-            et clicks, jour par jour, pour toutes les requetes ou pages
+            <strong>Visualization of <?php echo ($query == 'query') ? 'keywords' : 'pages' ?> evolution in time for current filter</strong><br />
+            <br />Display sums of impressions, clicks and CTR, day by day for <?php echo ($query == 'query') ? 'keywords' : 'pages' ?> matching current filter <i>'<?php echo (strlen($search) > 16) ? substr($search, 0, 15) . '...' : $search ?>'</i>
         </p>
     </div>
-
-
-    <?php } ?>
 </form>
 
 <datalist id="filters">

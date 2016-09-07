@@ -2,7 +2,7 @@
 
 ## Description ##
 
-Search Console Archive store your Google Search Console (Webmaster Tools) Data to exceed the 90 days history and add a lot of analysis and search tools.
+Search Console Archive store your [Google Search Console](https://www.google.com/webmasters) (Webmaster Tools) data to exceed the 90 days history and add a lot of analysis and search tools.
 
 - Unlimited history
 - Up to 5000 records each day
@@ -37,14 +37,14 @@ Follow the instructions to Create a Service Account
 - Select your website
 - Click on the top right menu and select **Users & Property Owner**
 - Select **Add a new user**
-- Add the Service Account email and keep the Restricted permission
-- Click on Add
+- Add the Service Account email and keep the **Restricted** permission
+- Click on **Add**
 
 ### Script configuration ###
 
-Rename configuration/base.php.sample to configuration/base.php
+Rename *configuration/base.php.sample* to *configuration/base.php*
 
-Edit base.php and fill/replace the following :
+Edit *base.php* and fill/replace the following :
 - [Timezone](http://php.net/manual/en/timezones.php) & locale
 - Api Login
 - Websites to check (Add http:// or https:// before your website DNS)
@@ -63,10 +63,10 @@ Edit base.php and fill/replace the following :
 
 You will need a MySQL database for Search Console Archive AND a user granted for CREATE, SELECT, INSERT, UPDATE, DELETE
 
-- Open docs/sql/website.sql, replace the {%website%} token with your website name 
+- Open *docs/sql/website.sql*, replace the {%website%} token with your website name 
 (The ['table'] key used in the website array in the configuration file)
 - Run the SQL code to in your MySQL Database to create base tables for every website you want to add
-- Open docs/sql/filters.sql, replace the {%website%} token with your website name 
+- Open *docs/sql/filters.sql*, replace the {%website%} token with your website name 
 - Run the SQL code to in your MySQL Database to create base filters
 
 ### Data Import configuration ###
