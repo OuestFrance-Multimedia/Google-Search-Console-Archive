@@ -90,6 +90,27 @@ class Database
     }
 
     /**
+     * Return the Click Ratio (CTR) for specified Day, Device & Website
+     */
+    public function ratio($date, $website, $device)
+    {
+        $query = 'SELECT (ROUND((SUM(clicks)) / (SUM(impressions)) * 100)) AS ctr
+                  FROM ' . str_replace(array('{%device%}', '{%website%}'),
+                              array(self::_handle()->real_escape_string($device),
+                                  self::_handle()->real_escape_string($website)), self::$_configuration['database']['table']['queries']) . '
+                  WHERE query NOT LIKE \'ouestfrance\' AND query NOT LIKE \'ouest france\'
+                        AND date = \'' . self::_handle()->real_escape_string($date) . '\';';
+
+        # Executing Query
+        if (($resource = self::_handle()->query($query)) === false) {
+            throw new Exception('Query Error [' . self::$_mysql->sqlstate . '] : ' . $query);
+        } elseif (is_null($data = $resource->fetch_array()) === true) {
+            return false;
+        }
+        return $data['ctr'];
+    }
+
+    /**
      * Return the Last Insert Date for specified Day, Device & Website
      */
     public function last($query, $website, $device)

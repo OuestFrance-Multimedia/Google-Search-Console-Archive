@@ -46,13 +46,10 @@ $last = date('Y-m-d', $database->last($query, $website, ($device == '*') ? 'desk
 switch ($mode) {
     case 'detail' :
         # Making Interval
-        if (is_numeric($history)) {
-            $interval['base'] = array(
-                'from' => date('Y-m-d', strtotime($last . ' - ' . $history . ' days')),
-                'to' => $last);
-        } else {
-            $interval['base'] = null;
-        }
+        $interval['base'] = array(
+            'from' => date('Y-m-d', is_numeric($history) ? strtotime($last . ' - ' . $history . ' days') : 0),
+            'to' => $last);
+
 
         # Detail Mode : Keywords/Pages, Database Request
         $data = $database->detail($query, $website, $device, $search, $aggregate, $interval['base'], $group);
