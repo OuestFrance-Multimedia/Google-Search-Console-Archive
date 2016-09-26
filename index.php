@@ -50,7 +50,6 @@ switch ($mode) {
             'from' => date('Y-m-d', is_numeric($history) ? strtotime($last . ' - ' . $history . ' days') : 0),
             'to' => $last);
 
-
         # Detail Mode : Keywords/Pages, Database Request
         $data = $database->detail($query, $website, $device, $search, $aggregate, $interval['base'], $group);
 
