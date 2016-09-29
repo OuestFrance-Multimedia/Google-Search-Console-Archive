@@ -242,13 +242,13 @@ class Database
                 # Query
                 $_data = $this->detail($query, $website, $device, $search, $aggregate, $interval, $group);
                 foreach ($_data as $_search) {
-                    if (isset($data[$_search[4]]) === true) {
+                    if (isset($data[$_search[3]]) === true) {
                         # Averaging Position
-                        $data[$_search[4]][3] = round(($data[$_search[4]][3] * $data[$_search[4]][1] + $_search[3] * $_search[1]) / ($data[$_search[4]][1] + $_search[1]), 1);
-                        $data[$_search[4]][1] += $_search[1];
-                        $data[$_search[4]][2] += $_search[2];
+                        $data[$_search[3]][2] = round(($data[$_search[3]][2] * $data[$_search[3]][0] + $_search[2] * $_search[0]) / ($data[$_search[3]][0] + $_search[0]), 1);
+                        $data[$_search[3]][0] += $_search[0];
+                        $data[$_search[3]][1] += $_search[1];
                     } else {
-                        $data[$_search[4]] = $_search;
+                        $data[$_search[3]] = $_search;
                     }
                 }
             }
@@ -307,10 +307,9 @@ class Database
             switch ($query) {
                 case 'query' :
                     # Data Aggregated by days
-                    $query = 'SELECT query,
-                              SUM(impressions) AS impressions,
-                              SUM(clicks) AS clicks,
-                              ROUND(AVG(position), 1) AS position,
+                    $query = 'SELECT SUM(impressions) AS impressions,
+                                     SUM(clicks) AS clicks,
+                                     ROUND(AVG(position), 1) AS position,
                              ' . $date . '
                               FROM ' . str_replace(array(
                         '{%device%}',
@@ -322,10 +321,9 @@ class Database
                               ORDER BY ' . $date . ' DESC';
                     break;
                 case 'page' :
-                    $query = 'SELECT page,
-                              SUM(impressions) AS impressions,
-                              SUM(clicks) AS clicks,
-                              ROUND(AVG(position), 1) AS position,
+                    $query = 'SELECT SUM(impressions) AS impressions,
+                                     SUM(clicks) AS clicks,
+                                     ROUND(AVG(position), 1) AS position,
                              ' . $date . '
                               FROM ' . str_replace(array(
                         '{%device%}',
@@ -348,10 +346,9 @@ class Database
             switch ($query) {
                 case 'query' :
                     # Data Aggregated by days
-                    $query = 'SELECT query,
-                              SUM(impressions) AS impressions,
-                              SUM(clicks) AS clicks,
-                              ROUND(AVG(position), 1) AS position,
+                    $query = 'SELECT SUM(impressions) AS impressions,
+                                     SUM(clicks) AS clicks,
+                                     ROUND(AVG(position), 1) AS position,
                              ' . $date . '
                               FROM ' . str_replace(array(
                         '{%device%}',
@@ -363,10 +360,9 @@ class Database
                               ORDER BY ' . $date . ' DESC';
                     break;
                 case 'page' :
-                    $query = 'SELECT page,
-                              SUM(impressions) AS impressions,
-                              SUM(clicks) AS clicks,
-                              ROUND(AVG(position), 1) AS position,
+                    $query = 'SELECT SUM(impressions) AS impressions,
+                                     SUM(clicks) AS clicks,
+                                     ROUND(AVG(position), 1) AS position,
                              ' . $date . '
                               FROM ' . str_replace(array(
                         '{%device%}',
@@ -391,8 +387,8 @@ class Database
         if ($group == 'week') {
             foreach ($data as $date => $_data) {
                 unset($data[$date]);
-                $date = date('Y-m-d', strtotime(substr($_data[4], 0, 4) . 'W' . substr($_data[4], - 2)));
-                $_data[4] = $date;
+                $date = date('Y-m-d', strtotime(substr($_data[3], 0, 4) . 'W' . substr($_data[3], - 2)));
+                $_data[3] = $date;
                 $data[$date] = $_data;
             }
         }

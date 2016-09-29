@@ -67,27 +67,27 @@ $count = 0;
 foreach ($data as $item) {
     # Computing for Charts
     $position[] = array(
-        strtotime($item[4]) * 1000,
-        $item[3]);
-    $ctr[] = array(
-        strtotime($item[4]) * 1000,
-        round($item[2] / $item[1] * 100, 0));
-    $impression[] = array(
-        strtotime($item[4]) * 1000,
-        $item[1]);
-    $click[] = array(
-        strtotime($item[4]) * 1000,
+        strtotime($item[3]) * 1000,
         $item[2]);
+    $ctr[] = array(
+        strtotime($item[3]) * 1000,
+        round($item[1] / $item[0] * 100, 0));
+    $impression[] = array(
+        strtotime($item[3]) * 1000,
+        $item[0]);
+    $click[] = array(
+        strtotime($item[3]) * 1000,
+        $item[1]);
     ?>
-<tr data-date="<?php echo $item[4] ?>" <?php if ($query == 'page') { ?>
-            data-href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=keywords&mode=keywords&search=<?php echo urlencode($item[0]) ?>&date[from]=<?php echo date('Y-m-d', strtotime($item[4])) ?>&date[to]=<?php echo date('Y-m-d', strtotime($item[4])) ?>"
+<tr data-date="<?php echo $item[3] ?>" <?php if ($query == 'page') { ?>
+            data-href="index.php?website=<?php echo $website ?>&device=<?php echo $device ?>&query=keywords&mode=keywords&search=<?php echo urlencode($search) ?>&date[from]=<?php echo date('Y-m-d', strtotime($item[3])) ?>&date[to]=<?php echo date('Y-m-d', strtotime($item[3])) ?>"
             class="clickable<?php } else { ?>class="<?php } if ($count++ % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
-            <td class="left"><?php echo ($aggregate == true) ? '<i>' . $search . '</i>' : preg_replace('/^(http:\/\/(?:www\.)?(?:[a-z\-]*)\.(?:com|fr)+)/', '', $item[0]) ?></td>
+            <td class="left"><?php echo ($aggregate == true) ? '<i>' . $search . '</i>' : preg_replace('/^(http:\/\/(?:www\.)?(?:[a-z\-]*)\.(?:com|fr)+)/', '', $search) ?></td>
+            <td><?php echo $item[0] ?></td>
             <td><?php echo $item[1] ?></td>
+            <td><?php echo round($item[1] / $item[0] * 100, 0) ?> %</td>
             <td><?php echo $item[2] ?></td>
-            <td><?php echo round($item[2] / $item[1] * 100, 0) ?> %</td>
-            <td><?php echo $item[3] ?></td>
-            <td><?php echo ($group == 'day') ? date('Y-m-d', strtotime($item[4])) : 'S' . date('W', strtotime($item[4])) . ' <i>' . date('o', strtotime($item[4])) . '</i>'?></td>
+            <td><?php echo ($group == 'day') ? date('Y-m-d', strtotime($item[3])) : 'S' . date('W', strtotime($item[3])) . ' <i>' . date('o', strtotime($item[3])) . '</i>'?></td>
         </tr>
 <?php
 }

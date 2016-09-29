@@ -121,13 +121,13 @@ switch ($mode) {
             foreach ($data[$filter[0]] as $item) {
                 if (isset($data[$filter[0]]['position']) === true) {
                     # Averaging Position
-                    $data[$filter[0]]['position'] = round(($data[$filter[0]]['position'] * $data[$filter[0]]['impressions'] + $item[3] * $item[1]) / ($data[$filter[0]]['impressions'] + $item[1]), 1);
-                    $data[$filter[0]]['impressions'] += $item[1];
-                    $data[$filter[0]]['clicks'] += $item[2];
+                    $data[$filter[0]]['position'] = round(($data[$filter[0]]['position'] * $data[$filter[0]]['impressions'] + $item[2] * $item[0]) / ($data[$filter[0]]['impressions'] + $item[0]), 1);
+                    $data[$filter[0]]['impressions'] += $item[0];
+                    $data[$filter[0]]['clicks'] += $item[1];
                 } else {
-                    $data[$filter[0]]['position'] = $item[3];
-                    $data[$filter[0]]['impressions'] = $item[1];
-                    $data[$filter[0]]['clicks'] = $item[2];
+                    $data[$filter[0]]['position'] = $item[2];
+                    $data[$filter[0]]['impressions'] = $item[0];
+                    $data[$filter[0]]['clicks'] = $item[1];
                 }
             }
         }
@@ -157,9 +157,9 @@ switch ($mode) {
             foreach ($items as $item) {
                 if (isset($compare[$filter[0]]['#' . $item[0]]) === true) {
                     # Averaging Position
-                    $compare[$filter[0]]['#' . $item[0]][3] = round(($compare[$filter[0]]['#' . $item[0]][3] * $compare[$filter[0]]['#' . $item[0]][1] + $item[3] * $item[1]) / ($compare[$filter[0]]['#' . $item[0]][1] + $item[1]), 0);
+                    $compare[$filter[0]]['#' . $item[0]][2] = round(($compare[$filter[0]]['#' . $item[0]][2] * $compare[$filter[0]]['#' . $item[0]][0] + $item[2] * $item[0]) / ($compare[$filter[0]]['#' . $item[0]][0] + $item[0]), 0);
+                    $compare[$filter[0]]['#' . $item[0]][0] += $item[0];
                     $compare[$filter[0]]['#' . $item[0]][1] += $item[1];
-                    $compare[$filter[0]]['#' . $item[0]][2] += $item[2];
                 } else {
                     $compare[$filter[0]]['#' . $item[0]] = $item;
                 }
@@ -169,13 +169,13 @@ switch ($mode) {
             foreach ($compare[$filter[0]] as $item) {
                 if (isset($compare[$filter[0]]['position']) === true) {
                     # Averaging Position
-                    $compare[$filter[0]]['position'] = round(($compare[$filter[0]]['position'] * $compare[$filter[0]]['impressions'] + $item[3] * $item[1]) / ($compare[$filter[0]]['impressions'] + $item[1]), 0);
-                    $compare[$filter[0]]['impressions'] += $item[1];
-                    $compare[$filter[0]]['clicks'] += $item[2];
+                    $compare[$filter[0]]['position'] = round(($compare[$filter[0]]['position'] * $compare[$filter[0]]['impressions'] + $item[2] * $item[0]) / ($compare[$filter[0]]['impressions'] + $item[0]), 0);
+                    $compare[$filter[0]]['impressions'] += $item[0];
+                    $compare[$filter[0]]['clicks'] += $item[1];
                 } else {
-                    $compare[$filter[0]]['position'] = $item[3];
-                    $compare[$filter[0]]['impressions'] = $item[1];
-                    $compare[$filter[0]]['clicks'] = $item[2];
+                    $compare[$filter[0]]['position'] = $item[2];
+                    $compare[$filter[0]]['impressions'] = $item[0];
+                    $compare[$filter[0]]['clicks'] = $item[1];
                 }
             }
         }
