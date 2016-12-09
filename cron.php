@@ -20,39 +20,12 @@
 
 # Bootstrap
 require 'bootstrap.php';
-
 ?>
-                   .
-                 ....8ob.
-              o88888888888b.
-          ..o888888888888888b..
-          888888888888888P""888P
-         8888888888888888888888.
-        d88888888888888888888888bc.
-       o8888888888888888"   ""38888Poo..
-      .8888888888P888888        "38888888
-      88888888888 8888888eeeeee.   ""38"8
-     P" 888888888 """""       `""o._.oP
-        8888888888.
-        88888888888
-        '888888888 8b.
-         "88888888b  """"3booooooo..
-          "888888888888888b         "b.
-           "8888888888888888888888b    "8
-            "8888888888888888888888888   b
-                ""888888888888888888888  c
-                   "8888888888888888888  P
-                    "88888888888888888888"
-                    .88888888888888888888
-                   .88888 ><)))°> 88888P    Google Console API Query
-                 od888888888888888888P"
-
-Configuration :
-  Database : <?php echo $configuration['database']['username'] . '@' . $configuration['database']['host'] . ':' . $configuration['database']['port'] . '/' . $configuration['database']['database'] . PHP_EOL?>
-Usage : php cron.php $from
-        $from : days of data history to check from now
-Docs : https://developers.google.com/webmaster-tools/v3/searchanalytics/query
-
+    Configuration :
+    Database : <?php echo $configuration['database']['username'] . '@' . $configuration['database']['host'] . ':' . $configuration['database']['port'] . '/' . $configuration['database']['database'] . PHP_EOL ?>
+    Usage : php cron.php $from
+    $from : days of data history to check from now
+    Docs : https://developers.google.com/webmaster-tools/v3/searchanalytics/query
 <?php
 # Parameters
 $date['from'] = (isset($_GET['start'])) ? $_GET['start'] : date('Y-m-d', (isset($argv[1]) ? strtotime('-' . (int)$argv[1] . ' days') : strtotime('-7 days')));
@@ -94,17 +67,19 @@ foreach ($configuration['websites'] as $website) {
 
             # Top Page
             if (($data = $query->pages($website, $device, array(
-                'from' => $time,
-                'to' => $time))) != false) {
+                    'from' => $time,
+                    'to' => $time))) != false
+            ) {
                 # Using Results
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'REPLACE INTO ' . str_replace(array(
-                        '{%device%}',
-                        '{%website%}'), array(
-                        $device,
-                        $website['table']), $configuration['database']['table']['pages']) . ' (`page`,`impressions`,`clicks`,`position`,`date`)
-                          VALUES (\'' . $database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\');';
+                    $sql[] = 'INSERT INTO ' . str_replace(array(
+                            '{%device%}',
+                            '{%website%}'), array(
+                            $device,
+                            $website['table']), $configuration['database']['table']['pages']) . ' (`page`,`impressions`,`clicks`,`position`,`date`)
+                          VALUES (\'' . $database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\')
+                          ON DUPLICATE KEY UPDATE impression = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
                 }
 
                 # Trace
@@ -116,16 +91,18 @@ foreach ($configuration['websites'] as $website) {
 
             # Top Query
             if (($data = $query->queries($website, $device, array(
-                'from' => $time,
-                'to' => $time))) != false) {
+                    'from' => $time,
+                    'to' => $time))) != false
+            ) {
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'REPLACE INTO ' . str_replace(array(
-                        '{%device%}',
-                        '{%website%}'), array(
-                        $device,
-                        $website['table']), $configuration['database']['table']['queries']) . ' (`query`,`impressions`,`clicks`,`position`,`date`)
-                          VALUES (\'' . $database->_handle()->real_escape_string($data->keys[0]) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ', \'' . (float)round($data->position, 1) . '\',\'' . $data->keys[1] . '\')';
+                    $sql[] = 'INSERT INTO ' . str_replace(array(
+                            '{%device%}',
+                            '{%website%}'), array(
+                            $device,
+                            $website['table']), $configuration['database']['table']['queries']) . ' (`query`,`impressions`,`clicks`,`position`,`date`)
+                          VALUES (\'' . $database->_handle()->real_escape_string($data->keys[0]) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ', \'' . (float)round($data->position, 1) . '\',\'' . $data->keys[1] . '\')
+                          ON DUPLICATE KEY UPDATE impression = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
                 }
 
                 # Trace
