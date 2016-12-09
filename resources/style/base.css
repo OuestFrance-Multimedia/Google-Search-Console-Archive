@@ -10,7 +10,7 @@ body {
     line-height: normal;
 }
 
-@media (max-width : 1441px) {
+@media (max-width: 1441px) {
     body {
         padding-top: 100px;
     }
@@ -158,13 +158,13 @@ body {
     padding-left: 0px;
 }
 
-.nav>li {
+.nav > li {
     display: block;
     position: relative;
     float: left;
 }
 
-.nav>li:first-child {
+.nav > li:first-child {
     padding-right: 10px;
     padding-top: 8px;
     padding-bottom: 8px;
@@ -172,16 +172,16 @@ body {
     color: #FFF;
 }
 
-.nav>li.selected {
+.nav > li.selected {
     background-color: #24C4E1;
 }
 
-.nav>li>a:hover {
+.nav > li > a:hover {
     background-color: black;
     transition: background-color 0.5s ease 0s, color 0.5s ease 0s;
 }
 
-.nav>li>a, .nav>li>input {
+.nav > li > a, .nav > li > input {
     display: block;
     position: relative;
     padding-left: 8px;
@@ -199,7 +199,7 @@ body {
 
 form {
     margin-bottom: 0;
-    margin-top: 0; //
+    margin-top: 0;
     margin-left: 10px;
 }
 
@@ -244,14 +244,14 @@ select.google, button.google {
 }
 
 button.trace {
-	background-color: rgb(219, 50, 54);
+    background-color: rgb(219, 50, 54);
     color: white;
     margin-bottom: 6px;
 }
 
 div.trace pre {
-	border: 0;
-	line-height: 1;
+    border: 0;
+    line-height: 1;
 }
 
 input[type="submit"]:hover, button:hover {
@@ -275,6 +275,7 @@ input.date:hover {
     background-color: black;
     transition: background-color 0.5s ease 0s, color 0.5s ease 0s;
 }
+
 .container {
     margin: 0 auto;
     width: 1224px;
@@ -330,7 +331,7 @@ input.date:hover {
     margin-bottom: 10px;
 }
 
-#filter-popup>.help-tip {
+#filter-popup > .help-tip {
     margin-left: 10px;
 }
 
@@ -348,8 +349,8 @@ input.date:hover {
     position: relative;
     display: inline-block;
     text-align: center;
-    background-color: rgb(66, 133, 244); //
-    border-radius: 50%;
+    background-color: rgb(66, 133, 244);
+// border-radius: 50 %;
     margin-left: -5px;
     width: 33px;
     height: 33px;
@@ -417,46 +418,40 @@ input.date:hover {
 
 /* CSS animation */
 @
--webkit-keyframes fadeIn { 0% {
-    opacity: 0;
-    transform: scale(0.6);
+-webkit-keyframes fadeIn {
+0
+%
+{
+    opacity: 0
+;
+    transform: scale(0.6)
+;
 }
 
-100%
+100
+%
 {
-opacity
-
-
-:
-
-
-100%;
-transform
-
-
-:
-
- 
-
-scale
-
-
-(1);
+    opacity: 100%
+;
+    transform: scale(1)
+;
 }
 }
 @
-keyframes fadeIn { 0% {
-    opacity: 0;
-}
+keyframes fadeIn {
 
-100%
+0
+%
 {
-opacity
-
-
-:
-
-
-100%;
+    opacity: 0
+;
 }
-}}
+
+100
+%
+{
+    opacity: 100%
+;
+}
+}
+}
