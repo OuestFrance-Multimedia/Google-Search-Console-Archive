@@ -1,5 +1,5 @@
 #
-# Don't forget to replace {%website%} token with your website configuration name (id in the sample)
+# Don't forget to replace {%website_table%} token with your table name of the website configuration (id in the sample)
 #
 #'websites' => array(
 #        'id' => array(
@@ -9,7 +9,7 @@
 # Create these six tables for every website you want to add
 #
 
-CREATE TABLE `pages_desktop_{%website%}` (
+CREATE TABLE `pages_desktop_{%website_table%}` (
   `page` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE `pages_desktop_{%website%}` (
   KEY `DATE` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `pages_mobile_{%website%}` (
+CREATE TABLE `pages_mobile_{%website_table%}` (
   `page` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `pages_mobile_{%website%}` (
   KEY `DATE` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `pages_tablet_{%website%}` (
+CREATE TABLE `pages_tablet_{%website_table%}` (
   `page` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `pages_tablet_{%website%}` (
   KEY `DATE` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `queries_desktop_{%website%}` (
+CREATE TABLE `queries_desktop_{%website_table%}` (
   `query` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE `queries_desktop_{%website%}` (
   KEY `DATE` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `queries_mobile_{%website%}` (
+CREATE TABLE `queries_mobile_{%website_table%}` (
   `query` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE `queries_mobile_{%website%}` (
   KEY `DATE` (`date`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `queries_tablet_{%website%}` (
+CREATE TABLE `queries_tablet_{%website_table%}` (
   `query` varchar(250) NOT NULL,
   `impressions` int(11) NOT NULL,
   `clicks` int(11) NOT NULL,
