@@ -78,8 +78,8 @@ foreach ($configuration['websites'] as $website) {
                             '{%website%}'), array(
                             $device,
                             $website['table']), $configuration['database']['table']['pages']) . ' (`page`,`impressions`,`clicks`,`position`,`date`)
-                          VALUES (\'' . $database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\')
-                          ON DUPLICATE KEY UPDATE impression = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
+                          VALUES (\'' . substr($database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])), 0, 250) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\')
+                          ON DUPLICATE KEY UPDATE impressions = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
                 }
 
                 # Trace
@@ -102,7 +102,7 @@ foreach ($configuration['websites'] as $website) {
                             $device,
                             $website['table']), $configuration['database']['table']['queries']) . ' (`query`,`impressions`,`clicks`,`position`,`date`)
                           VALUES (\'' . $database->_handle()->real_escape_string($data->keys[0]) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ', \'' . (float)round($data->position, 1) . '\',\'' . $data->keys[1] . '\')
-                          ON DUPLICATE KEY UPDATE impression = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
+                          ON DUPLICATE KEY UPDATE impressions = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
                 }
 
                 # Trace
