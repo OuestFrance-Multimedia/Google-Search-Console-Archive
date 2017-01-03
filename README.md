@@ -63,7 +63,7 @@ Edit *base.php* and fill/replace the following :
 
 You will need a MySQL database for Search Console Archive AND a user granted for CREATE, SELECT, INSERT, UPDATE, DELETE
 
-- Open *docs/sql/website.sql*, replace the {%website%} token with your website name 
+- Open *docs/sql/website.sql*, replace the {%website_table%} token with your website's table name
 (The ['table'] key used in the website array in the configuration file)
 - Run the SQL code to in your MySQL Database to create base tables for every website you want to add
 - Open *docs/sql/filters.sql*, replace the {%website%} token with your website name 

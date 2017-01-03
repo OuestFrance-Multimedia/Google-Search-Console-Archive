@@ -99,11 +99,11 @@ foreach ($configuration['websites'] as $website) {
                 # Using Results
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'REPLACE INTO ' . str_replace(array(
+                    $sql[] = 'REPLACE INTO `' . str_replace(array(
                         '{%device%}',
                         '{%website%}'), array(
                         $device,
-                        $website['table']), $configuration['database']['table']['pages']) . ' (`page`,`impressions`,`clicks`,`position`,`date`)
+                        $website['table']), $configuration['database']['table']['pages']) . '` (`page`,`impressions`,`clicks`,`position`,`date`)
                           VALUES (\'' . $database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\');';
                 }
 
@@ -120,11 +120,11 @@ foreach ($configuration['websites'] as $website) {
                 'to' => $time))) != false) {
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'REPLACE INTO ' . str_replace(array(
+                    $sql[] = 'REPLACE INTO `' . str_replace(array(
                         '{%device%}',
                         '{%website%}'), array(
                         $device,
-                        $website['table']), $configuration['database']['table']['queries']) . ' (`query`,`impressions`,`clicks`,`position`,`date`)
+                        $website['table']), $configuration['database']['table']['queries']) . '` (`query`,`impressions`,`clicks`,`position`,`date`)
                           VALUES (\'' . $database->_handle()->real_escape_string($data->keys[0]) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ', \'' . (float)round($data->position, 1) . '\',\'' . $data->keys[1] . '\')';
                 }
 
