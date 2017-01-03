@@ -182,12 +182,12 @@ switch ($mode) {
 
         # Making Comparison
         $statistics = array();
-        foreach ($data as $filter => $unused) {
-            if (isset($compare[$filter])) {
-                $statistics[$filter]['position'] = $data[$filter]['position'] - $compare[$filter]['position'];
-                $statistics[$filter]['impressions'] = max(- 100, min(100, round(($data[$filter]['impressions'] - $compare[$filter]['impressions']) / $compare[$filter]['impressions'] * 100, 0)));
-                $statistics[$filter]['clicks'] = max(- 100, min(100, round(($data[$filter]['clicks'] - $compare[$filter]['clicks']) / $compare[$filter]['clicks'] * 100, 0)));
-                $statistics[$filter]['ctr'] = round($data[$filter]['clicks'] / $data[$filter]['impressions'] * 100 - $compare[$filter]['clicks'] / $compare[$filter]['impressions'] * 100, 0);
+        foreach ($filters as $filter) {
+            if (isset($compare[$filter[0]])) {
+                $statistics[$filter[0]]['position'] = $data[$filter[0]]['position'] - $compare[$filter[0]]['position'];
+                $statistics[$filter[0]]['impressions'] = max(- 100, min(100, round(($data[$filter[0]]['impressions'] - $compare[$filter[0]]['impressions']) / $compare[$filter[0]]['impressions'] * 100, 0)));
+                $statistics[$filter[0]]['clicks'] = max(- 100, min(100, round(($data[$filter[0]]['clicks'] - $compare[$filter[0]]['clicks']) / $compare[$filter[0]]['clicks'] * 100, 0)));
+                $statistics[$filter[0]]['ctr'] = round($data[$filter[0]]['clicks'] / $data[$filter[0]]['impressions'] * 100 - $compare[$filter[0]]['clicks'] / $compare[$filter[0]]['impressions'] * 100, 0);
             }
         }
 
