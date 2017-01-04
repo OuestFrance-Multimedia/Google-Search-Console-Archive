@@ -8,8 +8,8 @@ $(function() {
 			'.clickable',
 			function(event) {
 				// Middle Click or CTRL Click
-				if ((event.which == 2)
-						|| ((event.which == 1) && (event.ctrlKey == true))) {
+				if ((event.which === 2)
+						|| ((event.which === 1) && (event.ctrlKey === true))) {
 					window.open($(this).data('href'), 'window name');
 				} else {
 					// Normal Click
@@ -18,11 +18,6 @@ $(function() {
 				event.preventDefault();
 				return false;
 			});
-
-	$('.export').on('click', function(event) {
-		exportTableToCSV.apply(this, [ $('#list'), 'export.csv' ]);
-	});
-
 	$.fn.graphup.colorMaps.colorMap = [ [ 221, 68, 55 ], [ 232, 129, 120 ], [],
 			[ 180, 209, 58 ], [ 132, 155, 36 ] ];
 	$.fn.graphup.colorMaps.colorMapInverted = [ [ 132, 155, 36 ],
@@ -48,62 +43,61 @@ $(function() {
 
 	// Overlay & Popup Handling
 	function overlay() {
-		element = document.getElementById('filter-overlay');
+		var element = document.getElementById('filter-overlay');
 		element.style.visibility = (element.style.visibility == 'visible') ? 'hidden'
 				: 'visible';
 		element = document.getElementById('filter-popup');
 		element.style.visibility = (element.style.visibility == 'visible') ? 'hidden'
 				: 'visible';
 	}
-	$('#filter-overlay').on('click', function(event) {
+	$('#filter-overlay').on('click', function() {
 		overlay();
 		return false;
 	});
-	$('#filter-handling').on('click', function(event) {
+	$('#filter-handling').on('click', function() {
 		overlay();
 		return false;
 	});
 
 	// Initializing
 	$('#filters>option').each(function() {
-		if ($('#filter-value').val() == this.value) {
+		if ($('#filter-value').val() === this.value) {
 			$('#filter-name').val(this.label);
 		}
 	});
 
 	// Form Handling
-	$('#filter-value').on('input change', function(event) {
+	$('#filter-value').on('input change', function() {
 		var current = this.value;
 		$('#filters>option').each(function() {
-			if (current == this.value) {
+			if (current === this.value) {
 				$('#filter-name').val(this.label);
 			}
 		});
 
 	});
 
-	$('#search').on('input change', function(event) {
+	$('#search').on('input change', function() {
 		current = this.value;
 		var found = false;
 		$('#filter-value').val(current);
 		$('#filters>option').each(function() {
-			if (current == this.value) {
+			if (current === this.value) {
 				found = true;
 				$('#filter-name').val(this.label);
 			}
 		});
-		if (found == false) {
+		if (found === false) {
 			$('#filter-name').val('');
 		}
 	});
 
 	// Adding Filter
-	$('#filter-add, #filter-delete').on('click', function(event) {
+	$('#filter-add, #filter-delete').on('click', function() {
 		var name = $('#filter-name').val();
 		var value = $('#filter-value').val();
-		var action = null;
 
-		if (this.id == 'filter-add') {
+		if (this.id === 'filter-add') {
 			action = 'add'
 		} else {
 			action = 'delete'

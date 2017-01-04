@@ -22,7 +22,9 @@
 require 'bootstrap.php';
 ?>
     Configuration :
-    Database : <?php echo $configuration['database']['username'] . '@' . $configuration['database']['host'] . ':' . $configuration['database']['port'] . '/' . $configuration['database']['database'] . PHP_EOL ?>
+    Database : <?php
+
+echo $configuration['database']['username'] . '@' . $configuration['database']['host'] . ':' . $configuration['database']['port'] . '/' . $configuration['database']['database'] . PHP_EOL?>
     Usage : php cron.php $from
     $from : days of data history to check from now
     Docs : https://developers.google.com/webmaster-tools/v3/searchanalytics/query
@@ -66,21 +68,13 @@ foreach ($configuration['websites'] as $website) {
             $query = new SearchConsole_Query($service);
 
             # Top Page
-            if (($data = $query->pages($website, $device, array(
-                    'from' => $time,
-                    'to' => $time))) != false
-            ) {
+            if (($data = $query->pages($website, $device, array('from' => $time, 'to' => $time))) != false) {
                 # Using Results
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'INSERT INTO `' . str_replace(array(
-                            '{%device%}',
-                            '{%website%}'), array(
-                            $device,
-                            $website['table']), $configuration['database']['table']['pages']) . '` (`page`,`impressions`,`clicks`,`position`,`date`)
+                    $sql[] = 'INSERT INTO `' . str_replace(array('{%device%}', '{%website%}'), array($device, $website['table']), $configuration['database']['table']['pages']) . '` (`page`,`impressions`,`clicks`,`position`,`date`)
                           VALUES (\'' . substr($database->_handle()->real_escape_string(str_replace($website['url'], '', $data->keys[0])), 0, 250) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ',' . (float)round($data->position, 1) . ',\'' . $data->keys[1] . '\')
                           ON DUPLICATE KEY UPDATE impressions = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
-
                 }
 
                 # Trace
@@ -91,17 +85,10 @@ foreach ($configuration['websites'] as $website) {
             }
 
             # Top Query
-            if (($data = $query->queries($website, $device, array(
-                    'from' => $time,
-                    'to' => $time))) != false
-            ) {
+            if (($data = $query->queries($website, $device, array('from' => $time, 'to' => $time))) != false) {
                 foreach ($data->getRows() as $data) {
                     # SQL Statistics Query
-                    $sql[] = 'INSERT INTO `' . str_replace(array(
-                            '{%device%}',
-                            '{%website%}'), array(
-                            $device,
-                            $website['table']), $configuration['database']['table']['queries']) . '` (`query`,`impressions`,`clicks`,`position`,`date`)
+                    $sql[] = 'INSERT INTO `' . str_replace(array('{%device%}', '{%website%}'), array($device, $website['table']), $configuration['database']['table']['queries']) . '` (`query`,`impressions`,`clicks`,`position`,`date`)
                           VALUES (\'' . $database->_handle()->real_escape_string($data->keys[0]) . '\',' . (integer)$data->impressions . ',' . (integer)$data->clicks . ', \'' . (float)round($data->position, 1) . '\',\'' . $data->keys[1] . '\')
                           ON DUPLICATE KEY UPDATE impressions = ' . (integer)$data->impressions . ', clicks = ' . (integer)$data->clicks . ', position = ' . (float)round($data->position, 1) . ';';
                 }

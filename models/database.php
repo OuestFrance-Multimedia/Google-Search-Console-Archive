@@ -126,13 +126,6 @@ class Database
                     self::_handle()->real_escape_string(self::website_table_name($website))), self::$_configuration['database']['table']['queries']) . '`';
                 break;
             case 'page' :
-                $query = 'SELECT MAX(date) AS date
-                          FROM `' . str_replace(array(
-                    '{%device%}',
-                    '{%website%}'), array(
-                    self::_handle()->real_escape_string($device),
-                    self::_handle()->real_escape_string(self::website_table_name($website))), self::$_configuration['database']['table']['pages']) . '`';
-                break;
             case 'keywords' :
                 $query = 'SELECT MAX(date) AS date
                           FROM `' . str_replace(array(

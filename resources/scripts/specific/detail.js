@@ -18,8 +18,7 @@ $(function() {
 			printButtonTitle : 'Imprimer le graphique',
 			resetZoom : 'Reinitialiser le zoom',
 			resetZoomTitle : 'Reinitialiser le zoom au niveau 1:1',
-			thousandsSep : ' ',
-			decimalPoint : ','
+			thousandsSep : ' '
 		},
 		global : {
 			useUTC : false
@@ -31,9 +30,8 @@ $(function() {
 	 */
 	function syncTooltip(container, p) {
 		if (p) {
-			var i;
 			for (i = 0; i < Highcharts.charts.length; i++) {
-				if (container.id != Highcharts.charts[i].container.id) {
+				if (container.id !== Highcharts.charts[i].container.id) {
 					Highcharts.charts[i].tooltip.refresh([
 							Highcharts.charts[i].series[0].data[p],
 							Highcharts.charts[i].series[1].data[p] ]);
@@ -42,9 +40,8 @@ $(function() {
 				}
 			}
 		} else {
-			var i;
 			for (i = 0; i < Highcharts.charts.length; i++) {
-				if (container.id != Highcharts.charts[i].container.id) {
+				if (container.id !== Highcharts.charts[i].container.id) {
 					Highcharts.charts[i].tooltip.hide();
 					Highcharts.charts[i].xAxis[0].hideCrosshair();
 				}
@@ -124,7 +121,7 @@ $(function() {
 																.getTime())) && (date
 																.getTime() <= max
 																.getTime()))
-																|| (event.min == undefined)) {
+																|| (event.min === undefined)) {
 															$(this).show();
 														} else {
 															$(this).hide();
@@ -185,12 +182,12 @@ $(function() {
 							shared : true,
 							formatter : function() {
 								var var_return = '';
-								if (var_interval == 86400000) {
+								if (var_interval === 86400000) {
 									var_return = Highcharts
 											.dateFormat(
 													'<span style="font-size: 10px">%A %e %B %Y</span><br/>',
 													this.x);
-								} else if (var_interval == 604800000) {
+								} else if (var_interval === 604800000) {
 									var_return = Highcharts
 											.dateFormat(
 													'<span style="font-size: 10px">Semaine du %e %b %Y</span><br/>',
@@ -332,12 +329,12 @@ $(function() {
 							shared : true,
 							formatter : function() {
 								var var_return = '';
-								if (var_interval == 86400000) {
+								if (var_interval === 86400000) {
 									var_return = Highcharts
 											.dateFormat(
 													'<span style="font-size: 10px">%A %e %B %Y</span><br/>',
 													this.x);
-								} else if (var_interval == 604800000) {
+								} else if (var_interval === 604800000) {
 									var_return = Highcharts
 											.dateFormat(
 													'<span style="font-size: 10px">Semaine du %e %b %Y</span><br/>',
@@ -402,8 +399,7 @@ $(function() {
 			'.clickable',
 			function(event) {
 				// Middle Click or CTRL Click
-				if ((event.which == 2)
-						|| ((event.which == 1) && (event.ctrlKey == true))) {
+				if ((event.which === 2) || ((event.which === 1) && (event.ctrlKey === true))) {
 					window.open($(this).data('href'), 'window name');
 				} else {
 					// Normal Click
