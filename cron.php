@@ -24,9 +24,9 @@ require 'bootstrap.php';
 echo <<<EOT
 Google Search Console Archive
 
-Usage : php cron.php [(integer)days of data history]
+Usage: php cron.php [(integer)days of data history]
 
-Database configuration : {$configuration['database']['username']}@{$configuration['database']['host']}:{$configuration['database']['port']}/{$configuration['database']['database']}
+Database: {$configuration['database']['username']}@{$configuration['database']['host']}:{$configuration['database']['port']}/{$configuration['database']['database']}
 
 EOT;
 
