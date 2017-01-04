@@ -44,8 +44,7 @@ $(function() {
 			printButtonTitle : 'Imprimer le graphique',
 			resetZoom : 'Reinitialiser le zoom',
 			resetZoomTitle : 'Reinitialiser le zoom au niveau 1:1',
-			thousandsSep : ' ',
-			decimalPoint : ','
+			thousandsSep : ' '
 		},
 		global : {
 			useUTC : false
@@ -83,7 +82,7 @@ $(function() {
 							max : 100,
 							title : {
 								text : var_xAxis
-										+ ((var_xAxis != 'Position') ? ' %'
+										+ ((var_xAxis !== 'Position') ? ' %'
 												: '')
 							},
 							tickAmount : 5,
@@ -101,7 +100,7 @@ $(function() {
 							max : 100,
 							title : {
 								text : var_yAxis
-										+ ((var_yAxis != 'Position') ? ' %'
+										+ ((var_yAxis !== 'Position') ? ' %'
 												: ''),
 							},
 							tickAmount : 5,
@@ -139,11 +138,11 @@ $(function() {
 							pointFormat : '<span style="color:{point.color}">\u25CF</span> {series.name}<br/>'
 									+ var_xAxis
 									+ ' : <b>{point.x} '
-									+ ((var_xAxis != 'Position') ? ' %' : '')
+									+ ((var_xAxis !== 'Position') ? ' %' : '')
 									+ '</b><br/>'
 									+ var_yAxis
 									+ ' : <b>{point.y} '
-									+ ((var_yAxis != 'Position') ? ' %' : '')
+									+ ((var_yAxis !== 'Position') ? ' %' : '')
 									+ '</b><br/>'
 									+ var_zAxis
 									+ ' (Volume) : <b>{point.z}</b><br/>',

@@ -74,8 +74,8 @@ switch ($mode) {
         # Creating Client & Applying Credentials
         $client = new Google_Client();
         $client->setAssertionCredentials($credentials);
-        if (@$client->getAuth()->isAccessTokenExpired()) {
-            @$client->getAuth()->refreshTokenWithAssertion();
+        if ($client->getAuth()->isAccessTokenExpired()) {
+            $client->getAuth()->refreshTokenWithAssertion();
         }
 
         # Starting Webmaster Tools Service

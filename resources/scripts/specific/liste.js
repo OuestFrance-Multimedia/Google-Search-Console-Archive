@@ -44,10 +44,10 @@ $(function() {
 	// Overlay & Popup Handling
 	function overlay() {
 		var element = document.getElementById('filter-overlay');
-		element.style.visibility = (element.style.visibility == 'visible') ? 'hidden'
+		element.style.visibility = (element.style.visibility === 'visible') ? 'hidden'
 				: 'visible';
 		element = document.getElementById('filter-popup');
-		element.style.visibility = (element.style.visibility == 'visible') ? 'hidden'
+		element.style.visibility = (element.style.visibility === 'visible') ? 'hidden'
 				: 'visible';
 	}
 	$('#filter-overlay').on('click', function() {
