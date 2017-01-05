@@ -78,7 +78,7 @@ $(function() {
 	});
 
 	$('#search').on('input change', function() {
-		current = this.value;
+		var current = this.value;
 		var found = false;
 		$('#filter-value').val(current);
 		$('#filters>option').each(function() {
@@ -98,9 +98,9 @@ $(function() {
 		var value = $('#filter-value').val();
 
 		if (this.id === 'filter-add') {
-			action = 'add'
+			var action = 'add'
 		} else {
-			action = 'delete'
+			var action = 'delete'
 		}
 
 		if (name && value) {

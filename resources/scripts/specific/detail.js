@@ -40,10 +40,10 @@ $(function() {
 				}
 			}
 		} else {
-			for (var i = 0; i < Highcharts.charts.length; i++) {
-				if (container.id !== Highcharts.charts[i].container.id) {
-					Highcharts.charts[i].tooltip.hide();
-					Highcharts.charts[i].xAxis[0].hideCrosshair();
+			for (var j = 0; j < Highcharts.charts.length; j++) {
+				if (container.id !== Highcharts.charts[j].container.id) {
+					Highcharts.charts[j].tooltip.hide();
+					Highcharts.charts[j].xAxis[0].hideCrosshair();
 				}
 			}
 		}
