@@ -30,7 +30,7 @@ $(function() {
 	 */
 	function syncTooltip(container, p) {
 		if (p) {
-			for (i = 0; i < Highcharts.charts.length; i++) {
+			for (var i = 0; i < Highcharts.charts.length; i++) {
 				if (container.id !== Highcharts.charts[i].container.id) {
 					Highcharts.charts[i].tooltip.refresh([
 							Highcharts.charts[i].series[0].data[p],
@@ -40,7 +40,7 @@ $(function() {
 				}
 			}
 		} else {
-			for (i = 0; i < Highcharts.charts.length; i++) {
+			for (var i = 0; i < Highcharts.charts.length; i++) {
 				if (container.id !== Highcharts.charts[i].container.id) {
 					Highcharts.charts[i].tooltip.hide();
 					Highcharts.charts[i].xAxis[0].hideCrosshair();
@@ -56,15 +56,14 @@ $(function() {
 		var thisChart = this.chart;
 		if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
 			Highcharts.each(Highcharts.charts, function(chart) {
-				if (chart !== thisChart) {
-					if (chart.xAxis[0].setExtremes) { // It is null while
-						// updating
-						chart.xAxis[0].setExtremes(e.min, e.max, undefined,
-								false, {
-									trigger : 'syncExtremes'
-								});
-					}
+				if ((chart !== thisChart) && (chart.xAxis[0].setExtremes)) { // It is null while
+					// updating
+					chart.xAxis[0].setExtremes(e.min, e.max, undefined,
+							false, {
+								trigger : 'syncExtremes'
+							});
 				}
+				
 			});
 		}
 	}

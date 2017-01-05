@@ -86,7 +86,7 @@ class SearchConsole_Query
 
         # Aggregation
         if ($date['from'] != $date['to']) {
-            foreach ($api->getRows() as $id => $row) {
+            foreach ($api->getRows() as $row) {
                 if (isset($data[$row->keys[1]]) === false) {
                     $data[$row->keys[1]] = array();
                     $data[$row->keys[1]]['clicks'] = $row['clicks'];
@@ -183,10 +183,5 @@ class SearchConsole_Query
         $this->_filters[] = $filter;
 
         return $this;
-    }
-
-    private function _trace($message)
-    {
-        echo $message . PHP_EOL;
     }
 }

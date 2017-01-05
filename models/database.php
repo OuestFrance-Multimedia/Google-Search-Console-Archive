@@ -591,9 +591,4 @@ class Database
     {
         return self::$_configuration['websites'][$website]['table'];
     }
-
-    private function _trace($message)
-    {
-        #echo $message . PHP_EOL;
-    }
 }

@@ -7,7 +7,8 @@
 <?php
 $var = array();
 foreach ($statistics as $filter => $statistic) {
-    $var[] = '{name: \'' . $filter . '\'' . ',data:[{\'x\':' . $statistic[$xAxis] . ',\'y\':' . $statistic[$yAxis] . ',\'z\':' . $data[$filter][$zAxis] . '}]' . ',showInLegend: true}';
+    $var[] = '{name: \'' . $filter . '\'' . ',data:[{\'x\':' . $statistic[$xAxis] . ',\'y\':' .
+             $statistic[$yAxis] . ',\'z\':' . $data[$filter][$zAxis] . '}]' . ',showInLegend: true}';
 }
 ?>
 
@@ -63,15 +64,11 @@ var var_data = [<?php echo implode(',', $var); ?>];
         type="hidden" name="compare" value="<?php echo $compare ?>" />
     <button type="submit" class="google">Filter</button>
 
-
     <a class="no-margin right"
         href="index.php?mode=matrix&website=<?php echo $website ?>&device=<?php echo $device ?>&query=<?php echo $query ?><?php echo (isset($interval['base']) ? '&date[from]=' . $interval['base']['from'] . '&date[to]=' . $interval['base']['to'] : '') ?>&compare=year<?php echo ((isset($xAxis) && isset($yAxis) && isset($zAxis) && ($mode == 'matrix')) ? '&xAxis=' . $xAxis . '&yAxis=' . $yAxis . '&zAxis=' . $zAxis : '') ?>">
         <button type="button" class="google">Compare with previous Year</button>
     </a>
-
-
 </form>
-
 
 <div id="container"></div>
 
@@ -101,17 +98,17 @@ foreach ($statistics as $filter => $statistic) {
     }
     ?>
     <tr
-            class="<?php if ($count % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
-            <td class="left"><?php echo $filter[0] ?><span class="right"><?php echo $filter[2] ?></span></td>
-            <td><?php echo $data[$filter[0]]['impressions'] ?></td>
-            <td class="_i"><?php echo (($statistic['impressions'] > 0) ? '+' : '') . (($statistic['impressions'] > 999) ? '&infin;' : $statistic['impressions']) ?></td>
-            <td><?php echo $data[$filter[0]]['clicks'] ?></td>
-            <td class="_i"><?php echo (($statistic['clicks'] > 0) ? '+' : '') . (($statistic['clicks'] > 999) ? '&infin;' : $statistic['clicks']) ?></td>
-            <td><?php echo round($data[$filter[0]]['clicks'] / $data[$filter[0]]['impressions'] * 100, 0) ?> %</td>
-            <td class="_c"><?php echo (($statistic['ctr'] > 0) ? '+' : '') . (($statistic['ctr'] > 999) ? '&infin;' : $statistic['ctr']) ?></td>
-            <td><?php echo $data[$filter[0]]['position'] ?></td>
-            <td class="_p"><?php echo (($statistic['position'] > 0) ? '+' : '') . (($statistic['position'] > 999) ? '&infin;' : $statistic['position']) ?></td>
-        </tr>
+        class="<?php if ($count % 2) { echo ' odd'; $odd = false; } else { $odd = true; } ?>">
+        <td class="left"><?php echo $filter[0] ?><span class="right"><?php echo $filter[2] ?></span></td>
+        <td><?php echo $data[$filter[0]]['impressions'] ?></td>
+        <td class="_i"><?php echo (($statistic['impressions'] > 0) ? '+' : '') . (($statistic['impressions'] > 999) ? '&infin;' : $statistic['impressions']) ?></td>
+        <td><?php echo $data[$filter[0]]['clicks'] ?></td>
+        <td class="_i"><?php echo (($statistic['clicks'] > 0) ? '+' : '') . (($statistic['clicks'] > 999) ? '&infin;' : $statistic['clicks']) ?></td>
+        <td><?php echo round($data[$filter[0]]['clicks'] / $data[$filter[0]]['impressions'] * 100, 0) ?> %</td>
+        <td class="_c"><?php echo (($statistic['ctr'] > 0) ? '+' : '') . (($statistic['ctr'] > 999) ? '&infin;' : $statistic['ctr']) ?></td>
+        <td><?php echo $data[$filter[0]]['position'] ?></td>
+        <td class="_p"><?php echo (($statistic['position'] > 0) ? '+' : '') . (($statistic['position'] > 999) ? '&infin;' : $statistic['position']) ?></td>
+    </tr>
 <?php
     $count ++;
 }
