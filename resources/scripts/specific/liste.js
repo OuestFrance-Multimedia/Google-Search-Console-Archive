@@ -96,11 +96,12 @@ $(function() {
 	$('#filter-add, #filter-delete').on('click', function() {
 		var name = $('#filter-name').val();
 		var value = $('#filter-value').val();
-
+		
+		var action = 'add';
 		if (this.id === 'filter-add') {
-			var action = 'add'
+			action = 'add';
 		} else {
-			var action = 'delete'
+			action = 'delete';
 		}
 
 		if (name && value) {

@@ -60,6 +60,7 @@ switch ($mode) {
         # Templates
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/detail.phtml';
+        include dirname(__FILE__) . '/resources/templates/footer.phtml';
 
         break;
     case 'keywords' :
@@ -100,6 +101,7 @@ switch ($mode) {
         # Templates
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/keywords.phtml';
+        include dirname(__FILE__) . '/resources/templates/footer.phtml';
         break;
     case 'matrix' :
         # Getting Axis Variables
@@ -198,6 +200,7 @@ switch ($mode) {
         # Templates
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/matrix.phtml';
+        include dirname(__FILE__) . '/resources/templates/footer.phtml';
         break;
     default :
         # List Mode : Keywords/Pages for website
@@ -248,8 +251,5 @@ switch ($mode) {
         # Templates
         include dirname(__FILE__) . '/resources/templates/header.phtml';
         include dirname(__FILE__) . '/resources/templates/list.phtml';
+        include dirname(__FILE__) . '/resources/templates/footer.phtml';
 }
-?>
-</div>
-</body>
-</html>
