@@ -2,7 +2,7 @@
 
 ## Description ##
 
-Search Console Archive store your [Google Search Console](https://www.google.com/webmasters) (Webmaster Tools) data to exceed the 90 days history and add a lot of analysis and search tools.
+Search Console Archive store your [Google Search Console](https://www.google.com/webmasters) (Webmaster Tools) data to exceed the 90 days history and add a lot of analysis and search tools..
 
 - Unlimited history
 - Up to 5000 records each day
