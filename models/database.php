@@ -178,7 +178,7 @@ class Database
         if ($interval === true) {
             # Making Request for each Interval @FIXME check date & interval
             # Executing Query
-            if (($resource = self::_handle()->query($query . ' WHERE date > ' . self::_handle()->real_escape_string(date('Y-m-d', $time - 7 * 86400)))) === false) {
+            if (($resource = self::_handle()->query($query . ' WHERE date > \'' . self::_handle()->real_escape_string(date('Y-m-d', $time - 7 * 86400)).'\'')) === false) {
                 throw new Exception('Query Error [' . self::$_mysql->sqlstate . '] : ' . $query);
             } elseif (is_null($data = $resource->fetch_array()) === true) {
                 return false;
@@ -187,7 +187,7 @@ class Database
             }
 
             # Executing Query
-            if (($resource = self::_handle()->query($query . ' WHERE date > ' . self::_handle()->real_escape_string(date('Y-m-d', $time - 15 * 86400)))) === false) {
+            if (($resource = self::_handle()->query($query . ' WHERE date > \'' . self::_handle()->real_escape_string(date('Y-m-d', $time - 15 * 86400)).'\'')) === false) {
                 throw new Exception('Query Error [' . self::$_mysql->sqlstate . '] : ' . $query);
             } elseif (is_null($data = $resource->fetch_array()) === true) {
                 return false;
@@ -196,7 +196,7 @@ class Database
             }
 
             # Executing Query
-            if (($resource = self::_handle()->query($query . ' WHERE date > ' . self::_handle()->real_escape_string(date('Y-m-d', $time - 30 * 86400)))) === false) {
+            if (($resource = self::_handle()->query($query . ' WHERE date > \'' . self::_handle()->real_escape_string(date('Y-m-d', $time - 30 * 86400)).'\'')) === false) {
                 throw new Exception('Query Error [' . self::$_mysql->sqlstate . '] : ' . $query);
             } elseif (is_null($data = $resource->fetch_array()) === true) {
                 return false;
